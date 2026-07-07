@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portal GIS Interaktif Kelurahan Andongsili</title>
+  
+  <!-- Google Fonts: Outfit (Heading) & Inter (Body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+  
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+  
+  <!-- FontAwesome Icons for modern aesthetic -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="hero-active">
+
+  <!-- ================= HERO SECTION (LANDING VIEW) ================= -->
+  <header class="hero-section">
+    <!-- Hero Background Image Overlay -->
+    <div class="hero-bg" id="heroBg"></div>
+    <div class="hero-overlay"></div>
+    
+    <!-- Navigation / Top Bar -->
+    <nav class="hero-nav">
+      <div class="nav-logo">
+        <i class="fa-solid fa-map-location-dot logo-icon"></i>
+        <span>GIS Andongsili</span>
+      </div>
+      <div class="nav-badge">
+        <span class="badge-accent">KKN UPN "Veteran" Yogyakarta 2026</span>
+      </div>
+    </nav>
+
+    <!-- Main Hero Content -->
+    <div class="hero-content">
+      <div class="hero-text-container">
+        <span class="hero-tagline"><i class="fa-solid fa-mountain-sun"></i> Mojotengah, Wonosobo</span>
+        <h1 class="hero-title" id="heroTitle">Kelurahan Andongsili</h1>
+        <p class="hero-description" id="heroDesc">Loading...</p>
+        
+        <!-- Stats Grid in Hero -->
+        <div class="hero-stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon"><i class="fa-solid fa-users"></i></div>
+            <div class="stat-info">
+              <span class="stat-value" id="statPop">-</span>
+              <span class="stat-label">Penduduk</span>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon"><i class="fa-solid fa-users-rectangle"></i></div>
+            <div class="stat-info">
+              <span class="stat-value" id="statKK">-</span>
+              <span class="stat-label">Kepala Keluarga</span>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon"><i class="fa-solid fa-house-chimney"></i></div>
+            <div class="stat-info">
+              <span class="stat-value" id="statRW">-</span>
+              <span class="stat-label">Rukun Warga (RW)</span>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon"><i class="fa-solid fa-chart-area"></i></div>
+            <div class="stat-info">
+              <span class="stat-value" id="statArea">-</span>
+              <span class="stat-label">Luas Area (Ha)</span>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Call to Action -->
+        <div class="hero-cta-group">
+          <button class="btn btn-primary" id="btnExplore">
+            <span>Mulai Penjelajahan Peta</span>
+            <i class="fa-solid fa-arrow-right"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ================= MAP SECTION (GIS EXPLORER) ================= -->
+  <main class="map-section">
+    <!-- The Leaflet Map Instance -->
+    <div id="map"></div>
+
+    <!-- UI Overlay Panels -->
+    <div class="map-overlays">
+      
+      <!-- 1. Floating Sidebar Panel (Left) -->
+      <aside class="floating-sidebar glassmorphism">
+        <div class="sidebar-header">
+          <button class="btn-back" id="btnBackToHero">
+            <i class="fa-solid fa-arrow-left"></i>
+            <span>Kembali ke Profil</span>
+          </button>
+          
+          <div class="theme-toggle-container">
+            <button class="btn-theme" id="btnThemeToggle" title="Ganti Tema Peta">
+              <i class="fa-solid fa-moon dark-icon"></i>
+              <i class="fa-solid fa-sun light-icon"></i>
+            </button>
+          </div>
+        </div>
+
+        <hr class="sidebar-divider">
+
+        <div class="sidebar-body">
+          <h2 class="sidebar-title">Eksplorasi Wilayah</h2>
+          
+          <!-- Search Bar -->
+          <div class="search-box">
+            <i class="fa-solid fa-magnifying-glass search-icon"></i>
+            <input type="text" id="searchInput" placeholder="Cari fasilitas/lokasi...">
+            <button class="clear-search" id="btnClearSearch"><i class="fa-solid fa-xmark"></i></button>
+          </div>
+
+          <!-- Category Filters -->
+          <div class="filter-section">
+            <h3 class="filter-title">Kategori Fasilitas</h3>
+            <div class="filter-group" id="filterGroup">
+              <!-- Dynamically rendered filters based on categories -->
+            </div>
+          </div>
+          
+          <!-- Quick Info/Summary -->
+          <div class="quick-info-box">
+            <h4>Batas Administrasi</h4>
+            <p>Peta ini menampilkan batas administrasi resmi Kelurahan Andongsili berdasarkan data spasial Kabupaten Wonosobo.</p>
+            <div class="boundary-legend">
+              <span class="legend-line"></span>
+              <span class="legend-text">Batas Kelurahan Andongsili</span>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- 2. Sliding Detail Panel / Drawer (Right) -->
+      <article class="detail-drawer glassmorphism" id="detailDrawer">
+        <button class="btn-close-drawer" id="btnCloseDrawer">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+
+        <div class="drawer-body" id="drawerBody">
+          <!-- Dynamically populated detail information -->
+          <div class="drawer-placeholder">
+            <i class="fa-solid fa-map-location-dot"></i>
+            <p>Pilih salah satu penanda di peta atau cari lokasi di sidebar untuk melihat informasi lengkap.</p>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </main>
+
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  
+  <!-- Data & Logic JS -->
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
