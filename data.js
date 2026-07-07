@@ -50,6 +50,39 @@ const LOCATIONS = [
     address: "Alamat.",
     image: "https://images.unsplash.com/photo-1541829019-2188201b83a0?auto=format&fit=crop&w=600&q=80",
     contact: "-"
+  },
+  {
+    id: 3,
+    name: "Masjid Al-Istiqomah",
+    category: "Tempat Ibadah",
+    latitude: -7.326195,
+    longitude: 109.922687,
+    description: "Masjid Al-Istiqomah merupakan salah satu fasilitas umum yang menyediakan berbagai layanan administrasi bagi masyarakat setempat.",
+    address: "Alamat.",
+    image: "https://images.unsplash.com/photo-1541829019-2188201b83a0?auto=format&fit=crop&w=600&q=80",
+    contact: "-"
+  },
+  {
+    id: 4,
+    name: "SDN Andongsili",
+    category: "Pendidikan",
+    latitude: -7.324732,
+    longitude: 109.921898,
+    description: "Deskripsi singkat.",
+    address: "Alamat.",
+    image: "https://images.unsplash.com/photo-1541829019-2188201b83a0?auto=format&fit=crop&w=600&q=80",
+    contact: "-"
+  },
+  {
+    id: 5,
+    name: "UNSIQ",
+    category: "Pendidikan",
+    latitude: -7.326638,
+    longitude: 109.912848,
+    description: "Universitas Sains Al-Qur'an (UNSIQ) merupakan salah satu fasilitas umum yang menyediakan berbagai layanan administrasi bagi masyarakat setempat.",
+    address: "Alamat.",
+    image: "https://images.unsplash.com/photo-1541829019-2188201b83a0?auto=format&fit=crop&w=600&q=80",
+    contact: "-"
   }
 ];
 

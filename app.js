@@ -23,6 +23,20 @@ document.addEventListener("DOMContentLoaded", () => {
     document.body.classList.remove("map-active");
     document.body.classList.add("hero-active");
     closeDrawer();
+    floatingSidebar.classList.remove("active");
+  });
+
+  // ================= 2.5 CONTROLLER TOGGLE SIDEBAR MOBILE =================
+  const btnToggleSidebar = document.getElementById("btnToggleSidebar");
+  const btnCloseSidebar = document.getElementById("btnCloseSidebar");
+  const floatingSidebar = document.getElementById("floatingSidebar");
+
+  btnToggleSidebar.addEventListener("click", () => {
+    floatingSidebar.classList.add("active");
+  });
+
+  btnCloseSidebar.addEventListener("click", () => {
+    floatingSidebar.classList.remove("active");
   });
 
   // ================= 3. INISIALISASI PETA LEAFLET =================
@@ -35,16 +49,53 @@ document.addEventListener("DOMContentLoaded", () => {
     position: "bottomright"
   }).addTo(map);
 
-  // Definisi Tile Layers (Light & Dark)
+  // Definisi Tile Layers (Light, Dark, & Satellite Hybrid)
   const TILE_ATTRIBUTION = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>';
-  const TILE_LIGHT = "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png";
-  const TILE_DARK = "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png";
-
-  let currentTileLayer = L.tileLayer(TILE_LIGHT, {
+  const TILE_LIGHT_URL = "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png";
+  const TILE_DARK_URL = "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png";
+  
+  const layerLight = L.tileLayer(TILE_LIGHT_URL, {
     attribution: TILE_ATTRIBUTION,
     subdomains: "abcd",
     maxZoom: 20
-  }).addTo(map);
+  });
+
+  const layerDark = L.tileLayer(TILE_DARK_URL, {
+    attribution: TILE_ATTRIBUTION,
+    subdomains: "abcd",
+    maxZoom: 20
+  });
+
+  // Citra Satelit Esri + Overlay Label CartoDB
+  const layerSatelliteImagery = L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}", {
+    attribution: "Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community",
+    maxZoom: 20
+  });
+
+  const layerSatelliteLabels = L.tileLayer("https://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}{r}.png", {
+    attribution: TILE_ATTRIBUTION,
+    subdomains: "abcd",
+    maxZoom: 20
+  });
+
+  const layerSatellite = L.layerGroup([layerSatelliteImagery, layerSatelliteLabels]);
+
+  // Baca basemap dari localStorage (default 'light')
+  const savedBasemap = localStorage.getItem("basemap") || "light";
+  let currentTileLayer;
+
+  if (savedBasemap === "dark") {
+    currentTileLayer = layerDark;
+    document.body.classList.add("dark-mode");
+  } else if (savedBasemap === "satellite") {
+    currentTileLayer = layerSatellite;
+    document.body.classList.add("dark-mode");
+  } else {
+    currentTileLayer = layerLight;
+    document.body.classList.remove("dark-mode");
+  }
+
+  currentTileLayer.addTo(map);
 
   // ================= 4. MEMUAT BATAS WILAYAH GEOJSON (STATIC OBJECT) =================
   let boundaryLayer = null;
@@ -158,6 +209,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function showLocationDetails(location, leafletMarker) {
     const meta = CATEGORY_META[location.category] || DEFAULT_META;
+    
+    // Tutup sidebar di perangkat mobile agar peta dan drawer detail terlihat jelas
+    if (window.innerWidth <= 768) {
+      floatingSidebar.classList.remove("active");
+    }
     
     drawerBody.innerHTML = `
       <div class="detail-image" style="background-image: url('${location.image}');"></div>
@@ -327,34 +383,50 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // ================= 9. SISTEM TOGGLE TEMA GELAP / TERANG =================
-  const btnThemeToggle = document.getElementById("btnThemeToggle");
+  // ================= 9. SISTEM PILIHAN BASEMAP & SINKRONISASI TEMA =================
+  const basemapCards = document.querySelectorAll(".basemap-card");
   
-  // Baca theme dari localStorage
-  const savedTheme = localStorage.getItem("theme") || "light";
-  if (savedTheme === "dark") {
-    document.body.classList.add("dark-mode");
-    swapTileLayer(TILE_DARK);
-  }
-
-  btnThemeToggle.addEventListener("click", () => {
-    const isDark = document.body.classList.toggle("dark-mode");
-    if (isDark) {
-      localStorage.setItem("theme", "dark");
-      swapTileLayer(TILE_DARK);
+  // Set status awal tombol switcher berdasarkan localStorage
+  basemapCards.forEach(card => {
+    if (card.getAttribute("data-basemap") === savedBasemap) {
+      card.classList.add("active");
     } else {
-      localStorage.setItem("theme", "light");
-      swapTileLayer(TILE_LIGHT);
+      card.classList.remove("active");
     }
   });
 
-  function swapTileLayer(tileUrl) {
+  basemapCards.forEach(card => {
+    card.addEventListener("click", () => {
+      const selected = card.getAttribute("data-basemap");
+      
+      // Simpan ke localStorage
+      localStorage.setItem("basemap", selected);
+      
+      // Update visual active card
+      basemapCards.forEach(c => c.classList.remove("active"));
+      card.classList.add("active");
+      
+      // Ganti layer peta & sinkronkan tema UI
+      let newLayer;
+      if (selected === "dark") {
+        newLayer = layerDark;
+        document.body.classList.add("dark-mode");
+      } else if (selected === "satellite") {
+        newLayer = layerSatellite;
+        document.body.classList.add("dark-mode"); // Satellite terlihat premium dengan tema gelap
+      } else {
+        newLayer = layerLight;
+        document.body.classList.remove("dark-mode");
+      }
+      
+      swapTileLayer(newLayer);
+    });
+  });
+
+  function swapTileLayer(newLayer) {
     map.removeLayer(currentTileLayer);
-    currentTileLayer = L.tileLayer(tileUrl, {
-      attribution: TILE_ATTRIBUTION,
-      subdomains: "abcd",
-      maxZoom: 20
-    }).addTo(map);
+    currentTileLayer = newLayer;
+    currentTileLayer.addTo(map);
   }
 
   // ================= 9.5 KOORDINAT PICKER (DEVELOPER HELPER) =================

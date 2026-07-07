@@ -96,20 +96,23 @@
     <!-- UI Overlay Panels -->
     <div class="map-overlays">
       
+      <!-- Floating Sidebar Toggle for Mobile -->
+      <button class="btn-toggle-sidebar glassmorphism" id="btnToggleSidebar" title="Tampilkan Menu">
+        <i class="fa-solid fa-sliders"></i>
+      </button>
+
       <!-- 1. Floating Sidebar Panel (Left) -->
-      <aside class="floating-sidebar glassmorphism">
+      <aside class="floating-sidebar glassmorphism" id="floatingSidebar">
         <div class="sidebar-header">
           <button class="btn-back" id="btnBackToHero">
             <i class="fa-solid fa-arrow-left"></i>
             <span>Kembali ke Profil</span>
           </button>
           
-          <div class="theme-toggle-container">
-            <button class="btn-theme" id="btnThemeToggle" title="Ganti Tema Peta">
-              <i class="fa-solid fa-moon dark-icon"></i>
-              <i class="fa-solid fa-sun light-icon"></i>
-            </button>
-          </div>
+          <button class="btn-close-sidebar" id="btnCloseSidebar" title="Tutup Menu">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
         </div>
 
         <hr class="sidebar-divider">
@@ -129,6 +132,31 @@
             <h3 class="filter-title">Kategori Fasilitas</h3>
             <div class="filter-group" id="filterGroup">
               <!-- Dynamically rendered filters based on categories -->
+            </div>
+          </div>
+
+          <!-- Basemap Selector -->
+          <div class="filter-section">
+            <h3 class="filter-title">Tipe Peta (Basemap)</h3>
+            <div class="basemap-group" id="basemapGroup">
+              <button class="basemap-card active" data-basemap="light" title="Peta Terang">
+                <div class="basemap-thumbnail light-thumb">
+                  <i class="fa-solid fa-sun"></i>
+                </div>
+                <span class="basemap-label">Terang</span>
+              </button>
+              <button class="basemap-card" data-basemap="dark" title="Peta Gelap">
+                <div class="basemap-thumbnail dark-thumb">
+                  <i class="fa-solid fa-moon"></i>
+                </div>
+                <span class="basemap-label">Gelap</span>
+              </button>
+              <button class="basemap-card" data-basemap="satellite" title="Citra Satelit">
+                <div class="basemap-thumbnail satellite-thumb">
+                  <i class="fa-solid fa-earth-asia"></i>
+                </div>
+                <span class="basemap-label">Satelit</span>
+              </button>
             </div>
           </div>
           
