@@ -136,10 +136,12 @@ body.dark-mode .btn-primary {
   justify-content: space-between;
   z-index: 100;
   transition: transform var(--transition-slow), opacity var(--transition-slow);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .hero-bg {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
@@ -150,7 +152,7 @@ body.dark-mode .btn-primary {
 }
 
 .hero-overlay {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
@@ -332,7 +334,7 @@ body.dark-mode .btn-primary {
 
 /* ================= ACTIVE STATE MANAGER ================= */
 body.hero-active .hero-section {
-  transform: translateY(0);
+  transform: none;
   opacity: 1;
   pointer-events: auto;
 }
@@ -1048,6 +1050,7 @@ body.map-active .map-section {
   
   .hero-section {
     height: 100dvh;
+    justify-content: flex-start;
   }
   
   .map-section {

@@ -233,6 +233,42 @@ document.addEventListener("DOMContentLoaded", () => {
   const drawerBody = document.getElementById("drawerBody");
   const btnCloseDrawer = document.getElementById("btnCloseDrawer");
 
+  // Helper to center the map on a coordinate while offsetting for active UI elements (sidebar/drawer)
+  function panToWithOffset(latlng) {
+    const currentZoom = map.getZoom();
+    const targetPoint = map.project(latlng, currentZoom);
+
+    let offsetX = 0;
+    let offsetY = 0;
+
+    const floatingSidebar = document.getElementById("floatingSidebar");
+
+    if (window.innerWidth <= 768) {
+      // Mobile Layout: bottom sheet (detailDrawer) covers the bottom of the screen
+      if (detailDrawer.classList.contains("active")) {
+        const drawerHeight = detailDrawer.offsetHeight;
+        // Shift map center down by half of the drawer height so the marker is pushed up
+        // into the center of the remaining visible area at the top
+        offsetY = drawerHeight / 2;
+      }
+    } else {
+      // Desktop Layout: sidebar on the left, detailDrawer on the right
+      const sidebarWidth = floatingSidebar ? floatingSidebar.offsetWidth : 0;
+      const drawerWidth = detailDrawer.classList.contains("active") ? detailDrawer.offsetWidth : 0;
+
+      // The center of the visible area is: sidebarWidth + (window.innerWidth - sidebarWidth - drawerWidth) / 2
+      // The offset from true center (window.innerWidth / 2) is:
+      // (drawerWidth - sidebarWidth) / 2
+      offsetX = (drawerWidth - sidebarWidth) / 2;
+    }
+
+    targetPoint.x += offsetX;
+    targetPoint.y += offsetY;
+
+    const targetLatLng = map.unproject(targetPoint, currentZoom);
+    map.panTo(targetLatLng);
+  }
+
   function showLocationDetails(location, leafletMarker) {
     const meta = CATEGORY_META[location.category] || DEFAULT_META;
     
@@ -288,7 +324,7 @@ document.addEventListener("DOMContentLoaded", () => {
       floatingSidebar.classList.remove("expanded");
     }
     
-    map.panTo([location.latitude, location.longitude]);
+    panToWithOffset([location.latitude, location.longitude]);
   }
 
   function highlightMarker(marker) {
@@ -305,6 +341,10 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function closeDrawer() {
+    if (detailDrawer.classList.contains("active") && activeSelectedMarker) {
+      map.panTo(activeSelectedMarker.getLatLng());
+    }
+
     detailDrawer.classList.remove("active");
     if (activeSelectedMarker) {
       const el = activeSelectedMarker.getElement();
