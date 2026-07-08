@@ -102,7 +102,10 @@
     <div class="map-overlays">
 
       <!-- 1. Floating Sidebar Panel (Left) -->
-      <aside class="floating-sidebar glassmorphism">
+      <aside class="floating-sidebar glassmorphism" id="floatingSidebar">
+        <!-- Drag Handle for Mobile Bottom Sheet -->
+        <div class="drag-handle" id="sidebarDragHandle"></div>
+
         <div class="sidebar-header">
           <button class="btn-back" id="btnBackToHero">
             <i class="fa-solid fa-arrow-left"></i>
@@ -124,7 +127,10 @@
 
           <!-- Category Filters -->
           <div class="filter-section">
-            <h3 class="filter-title">Kategori Fasilitas</h3>
+            <h3 class="filter-title collapsible-header" id="headerCategory">
+              <span>Kategori Fasilitas</span>
+              <i class="fa-solid fa-chevron-down toggle-icon"></i>
+            </h3>
             <div class="filter-group" id="filterGroup">
               <!-- Dynamically rendered filters based on categories -->
             </div>
@@ -132,7 +138,10 @@
 
           <!-- Basemap Selector -->
           <div class="filter-section">
-            <h3 class="filter-title">Tipe Peta (Basemap)</h3>
+            <h3 class="filter-title collapsible-header" id="headerBasemap">
+              <span>Tipe Peta (Basemap)</span>
+              <i class="fa-solid fa-chevron-down toggle-icon"></i>
+            </h3>
             <div class="basemap-group" id="basemapGroup">
               <button class="basemap-card active" data-basemap="light" title="Peta Terang">
                 <div class="basemap-thumbnail light-thumb">
@@ -155,14 +164,19 @@
             </div>
           </div>
 
-          <!-- Quick Info/Summary -->
-          <div class="quick-info-box">
-            <h4>Batas Administrasi</h4>
-            <p>Peta ini menampilkan batas administrasi resmi Kelurahan Andongsili berdasarkan data spasial Kabupaten
-              Wonosobo.</p>
-            <div class="boundary-legend">
-              <span class="legend-line"></span>
-              <span class="legend-text">Batas Kelurahan Andongsili</span>
+          <!-- Quick Info/Summary (now as a filter section) -->
+          <div class="filter-section">
+            <h3 class="filter-title collapsible-header" id="headerLegend">
+              <span>Batas Administrasi</span>
+              <i class="fa-solid fa-chevron-down toggle-icon"></i>
+            </h3>
+            <div class="quick-info-box">
+              <p>Peta ini menampilkan batas administrasi resmi Kelurahan Andongsili berdasarkan data spasial Kabupaten
+                Wonosobo.</p>
+              <div class="boundary-legend">
+                <span class="legend-line"></span>
+                <span class="legend-text">Batas Kelurahan Andongsili</span>
+              </div>
             </div>
           </div>
         </div>
@@ -170,6 +184,9 @@
 
       <!-- 2. Sliding Detail Panel / Drawer (Right) -->
       <article class="detail-drawer glassmorphism" id="detailDrawer">
+        <!-- Drag Handle for Mobile Bottom Sheet -->
+        <div class="drag-handle" id="drawerDragHandle"></div>
+
         <button class="btn-close-drawer" id="btnCloseDrawer">
           <i class="fa-solid fa-xmark"></i>
         </button>

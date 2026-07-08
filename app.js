@@ -87,19 +87,55 @@ document.addEventListener("DOMContentLoaded", () => {
 
   currentTileLayer.addTo(map);
 
-  // ================= 4. MEMUAT BATAS WILAYAH GEOJSON (STATIC OBJECT) =================
+  // ================= 4. MEMUAT BATAS WILAYAH GEOJSON & MASKING (STATIC OBJECT) =================
   let boundaryLayer = null;
+  let maskLayer = null;
+
   if (typeof KELURAHAN_BOUNDARY !== "undefined") {
+    // Buat koordinat dunia (luar)
+    const worldRing = [[-90, -360], [-90, 360], [90, 360], [90, -360]];
+    const maskRings = [worldRing];
+
+    // Konversi koordinat GeoJSON (lng, lat) ke Leaflet (lat, lng) untuk lubang (hole) mask
+    KELURAHAN_BOUNDARY.features.forEach(feature => {
+      const geom = feature.geometry;
+      if (geom.type === "Polygon") {
+        geom.coordinates.forEach(ring => {
+          const latLngs = ring.map(coord => [coord[1], coord[0]]);
+          maskRings.push(latLngs);
+        });
+      } else if (geom.type === "MultiPolygon") {
+        geom.coordinates.forEach(poly => {
+          poly.forEach(ring => {
+            const latLngs = ring.map(coord => [coord[1], coord[0]]);
+            maskRings.push(latLngs);
+          });
+        });
+      }
+    });
+
+    // Buat layer mask dengan warna yang sesuai tema saat ini
+    const isDarkTheme = savedBasemap === "dark" || savedBasemap === "satellite";
+    maskLayer = L.polygon(maskRings, {
+      color: "transparent",
+      weight: 0,
+      fillColor: isDarkTheme ? "#020617" : "#0f172a",
+      fillOpacity: isDarkTheme ? 0.4 : 0.25,
+      interactive: false // Membantu agar interaksi klik/hover tidak terganggu mask
+    }).addTo(map);
+
+    // Buat garis batas merah di atas mask
     boundaryLayer = L.geoJSON(KELURAHAN_BOUNDARY, {
       style: {
         color: "#ef4444",      // Warna merah
         weight: 2.5,
         dashArray: "6, 6",     // Garis putus-putus
-        fillColor: "#ef4444",
-        fillOpacity: 0.06      // Transparansi isi poligon
+        fillColor: "transparent",
+        fillOpacity: 0
       }
     }).addTo(map);
-    console.log("Batas wilayah GeoJSON berhasil dimuat dari data.js secara luring.");
+
+    console.log("Batas wilayah GeoJSON & Masking berhasil dimuat dari data.js.");
   } else {
     console.warn("Pemberitahuan: Variabel KELURAHAN_BOUNDARY tidak ditemukan.");
   }
@@ -245,6 +281,13 @@ document.addEventListener("DOMContentLoaded", () => {
     `;
     
     detailDrawer.classList.add("active");
+    
+    // Collapse sidebar on mobile when drawer is shown
+    const floatingSidebar = document.getElementById("floatingSidebar");
+    if (floatingSidebar && window.innerWidth <= 768) {
+      floatingSidebar.classList.remove("expanded");
+    }
+    
     map.panTo([location.latitude, location.longitude]);
   }
 
@@ -393,6 +436,7 @@ document.addEventListener("DOMContentLoaded", () => {
       
       // Ganti layer peta & sinkronkan tema UI
       let newLayer;
+      const isDark = selected === "dark" || selected === "satellite";
       if (selected === "dark") {
         newLayer = layerDark;
         document.body.classList.add("dark-mode");
@@ -402,6 +446,13 @@ document.addEventListener("DOMContentLoaded", () => {
       } else {
         newLayer = layerLight;
         document.body.classList.remove("dark-mode");
+      }
+      
+      if (maskLayer) {
+        maskLayer.setStyle({
+          fillColor: isDark ? "#020617" : "#0f172a",
+          fillOpacity: isDark ? 0.4 : 0.25
+        });
       }
       
       swapTileLayer(newLayer);
@@ -466,6 +517,57 @@ document.addEventListener("DOMContentLoaded", () => {
         .openOn(map);
     });
   }
+
+  // ================= 9.7 INTERAKSI MOBILE (BOTTOM SHEET & ACCORDION) =================
+  // Toggle status accordion (Filter, Basemap, Legenda)
+  document.querySelectorAll(".collapsible-header").forEach(header => {
+    header.addEventListener("click", () => {
+      const section = header.parentElement;
+      section.classList.toggle("collapsed");
+      
+      // Paksa map.invalidateSize() jika layout berubah agar Leaflet memuat ubin dengan benar
+      setTimeout(() => {
+        map.invalidateSize();
+      }, 300);
+    });
+  });
+
+  // Collapse basemap & legenda secara default jika di perangkat seluler (mobile)
+  if (window.innerWidth <= 768) {
+    const basemapSection = document.getElementById("headerBasemap")?.parentElement;
+    const legendSection = document.getElementById("headerLegend")?.parentElement;
+    if (basemapSection) basemapSection.classList.add("collapsed");
+    if (legendSection) legendSection.classList.add("collapsed");
+  }
+
+  // Pengelolaan status Bottom Sheet Sidebar
+  const floatingSidebar = document.getElementById("floatingSidebar");
+  const sidebarDragHandle = document.getElementById("sidebarDragHandle");
+
+  if (floatingSidebar && sidebarDragHandle) {
+    // Klik pada drag handle akan membuka/menutup sidebar
+    sidebarDragHandle.addEventListener("click", () => {
+      floatingSidebar.classList.toggle("expanded");
+    });
+
+    // Mengetik/Fokus pada search input otomatis membuka sidebar secara penuh
+    if (searchInput) {
+      searchInput.addEventListener("focus", () => {
+        floatingSidebar.classList.add("expanded");
+      });
+    }
+  }
+
+  // Menutup drawer & collapse sidebar ketika mengklik area kosong peta
+  map.on("click", (e) => {
+    // Abaikan jika klik dilakukan pada marker
+    if (e.originalEvent && e.originalEvent.target && e.originalEvent.target.closest('.leaflet-marker-icon')) return;
+
+    closeDrawer();
+    if (floatingSidebar) {
+      floatingSidebar.classList.remove("expanded");
+    }
+  });
 
   // ================= 10. HELPER UNTUK MENGISI DATA PROFIL =================
   function initProfileData() {
