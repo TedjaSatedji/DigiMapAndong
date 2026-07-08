@@ -23,20 +23,6 @@ document.addEventListener("DOMContentLoaded", () => {
     document.body.classList.remove("map-active");
     document.body.classList.add("hero-active");
     closeDrawer();
-    floatingSidebar.classList.remove("active");
-  });
-
-  // ================= 2.5 CONTROLLER TOGGLE SIDEBAR MOBILE =================
-  const btnToggleSidebar = document.getElementById("btnToggleSidebar");
-  const btnCloseSidebar = document.getElementById("btnCloseSidebar");
-  const floatingSidebar = document.getElementById("floatingSidebar");
-
-  btnToggleSidebar.addEventListener("click", () => {
-    floatingSidebar.classList.add("active");
-  });
-
-  btnCloseSidebar.addEventListener("click", () => {
-    floatingSidebar.classList.remove("active");
   });
 
   // ================= 3. INISIALISASI PETA LEAFLET =================
@@ -209,11 +195,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function showLocationDetails(location, leafletMarker) {
     const meta = CATEGORY_META[location.category] || DEFAULT_META;
-    
-    // Tutup sidebar di perangkat mobile agar peta dan drawer detail terlihat jelas
-    if (window.innerWidth <= 768) {
-      floatingSidebar.classList.remove("active");
-    }
     
     drawerBody.innerHTML = `
       <div class="detail-image" style="background-image: url('${location.image}');"></div>

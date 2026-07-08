@@ -184,6 +184,12 @@ body.dark-mode .btn-primary {
   font-size: 1.75rem;
 }
 
+.logo-img {
+  height: 40px;
+  width: auto;
+  object-fit: contain;
+}
+
 .nav-badge .badge-accent {
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(4px);
@@ -349,20 +355,8 @@ body.map-active .map-section {
   pointer-events: auto;
 }
 
-/* Floating Sidebar Toggle & Close Buttons (Mobile Only) */
-.btn-toggle-sidebar {
-  display: none;
-}
-
-.btn-close-sidebar {
-  display: none;
-}
-
 /* ================= FLOATING SIDEBAR (LEFT) ================= */
 .floating-sidebar {
-  position: absolute;
-  top: 1.5rem;
-  left: 1.5rem;
   width: 360px;
   height: calc(100% - 3rem);
   border-radius: 20px;
@@ -370,8 +364,6 @@ body.map-active .map-section {
   display: flex;
   flex-direction: column;
   pointer-events: auto; /* Re-enable pointer events for sidebar interaction */
-  z-index: 1010;
-  transition: transform var(--transition-normal);
 }
 
 .sidebar-header {
@@ -679,9 +671,6 @@ body.map-active .map-section {
 
 /* ================= SLIDING DETAIL DRAWER (RIGHT) ================= */
 .detail-drawer {
-  position: absolute;
-  top: 1.5rem;
-  right: 1.5rem;
   width: 380px;
   height: calc(100% - 3rem);
   border-radius: 20px;
@@ -692,7 +681,6 @@ body.map-active .map-section {
   transition: transform var(--transition-normal), opacity var(--transition-normal);
   transform: translateX(450px);
   opacity: 0;
-  z-index: 1010;
 }
 
 .detail-drawer.active {
@@ -1015,100 +1003,27 @@ body.map-active .map-section {
     margin-bottom: 2rem;
   }
   
-  /* Hide Leaflet zoom controls on mobile to avoid overlapping bottom sheet; pinch-zoom works best */
-  .leaflet-control-zoom {
-    display: none !important;
-  }
-
   /* Peta Overlays layout change on mobile */
   .map-overlays {
-    padding: 0;
-    width: 100%;
+    flex-direction: column;
     height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-  }
-
-  /* Mobile Sidebar styling: Slide-out drawer */
-  .btn-toggle-sidebar {
-    display: flex;
-    position: absolute;
-    top: 1rem;
-    left: 1rem;
-    width: 44px;
-    height: 44px;
-    border-radius: 12px;
-    align-items: center;
-    justify-content: center;
-    color: var(--text-main);
-    background: var(--bg-surface);
-    border: 1px solid var(--border-color);
-    font-size: 1.15rem;
-    cursor: pointer;
-    z-index: 999;
-    pointer-events: auto;
-    transition: all var(--transition-fast);
-    box-shadow: var(--shadow-md);
-  }
-
-  .btn-toggle-sidebar:hover {
-    background: var(--bg-primary);
-    color: var(--accent-color);
-  }
-
-  .btn-close-sidebar {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: var(--accent-light);
-    border: none;
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    color: var(--text-muted);
-    cursor: pointer;
-    transition: all var(--transition-fast);
-  }
-
-  .btn-close-sidebar:hover {
-    background: var(--accent-color);
-    color: #ffffff;
+    padding: 0.75rem;
+    gap: 0.75rem;
   }
   
   .floating-sidebar {
-    position: absolute;
-    top: 0.75rem;
-    left: 0.75rem;
-    width: calc(100% - 1.5rem);
-    max-width: 310px;
-    height: calc(100% - 1.5rem);
-    border-radius: 16px;
-    padding: 1.25rem;
-    z-index: 1020;
-    transform: translateX(-120%);
-    transition: transform var(--transition-normal);
-    box-shadow: var(--shadow-xl);
-  }
-  
-  .floating-sidebar.active {
-    transform: translateX(0);
-  }
-  
-  /* Mobile Detail Drawer styling: Bottom sheet */
-  .detail-drawer {
-    position: absolute;
-    left: 0;
-    bottom: 0;
     width: 100%;
-    height: 55%;
-    border-radius: 24px 24px 0 0;
-    padding: 1.25rem;
-    transform: translateY(110%);
-    opacity: 1;
-    z-index: 1030;
-    box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.15);
-    transition: transform var(--transition-normal);
+    height: 45%;
+    border-radius: 16px;
+    padding: 1rem;
+  }
+  
+  .detail-drawer {
+    width: 100%;
+    height: 50%;
+    border-radius: 16px;
+    transform: translateY(600px);
+    padding: 1rem;
   }
   
   .detail-drawer.active {
@@ -1116,7 +1031,7 @@ body.map-active .map-section {
   }
   
   .detail-image {
-    height: 140px;
+    height: 120px;
   }
   
   .sidebar-body {
@@ -1153,7 +1068,11 @@ body.map-active .map-section {
     grid-template-columns: 1fr;
   }
   
+  .floating-sidebar {
+    height: 50%;
+  }
+  
   .detail-drawer {
-    height: 60%;
+    height: 48%;
   }
 }

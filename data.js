@@ -12,15 +12,15 @@ const KELURAHAN_PROFILE = {
   phone: "(0286) 321888",
   description: "Kelurahan Andongsili merupakan salah satu kelurahan strategis di Kecamatan Mojotengah, Kabupaten Wonosobo, Jawa Tengah. Wilayah ini berfungsi sebagai pusat hunian, perdagangan lokal, serta area strategis pendidikan yang berbatasan langsung dengan kompleks akademik Universitas Sains Al-Qur'an (UNSIQ). Dikelilingi pemandangan alam perbukitan dan iklim pegunungan yang sejuk, Andongsili terus berkembang sebagai wilayah penyangga ekonomi perkotaan Wonosobo.",
   history: "Kelurahan Andongsili memiliki sejarah panjang sebagai kawasan pemukiman agraris yang subur di lereng Gunung Dieng. Seiring waktu, dengan dibangunnya akses Jalan Lingkar Utara Wonosobo dan berdirinya Kampus UNSIQ, wilayah Andongsili bertransformasi menjadi area semi-perkotaan yang dinamis. Meskipun demikian, nilai-nilai gotong royong dan kelestarian alam pedesaan tetap dijunjung tinggi oleh seluruh lapisan masyarakat di kelurahan ini.",
-  heroImage: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1600&q=80"
+  heroImage: "assets/photos/landscape.webp"
 };
 
 const KELURAHAN_STATS = {
-  population: "4.850",
+  population: "3.488",
   families: "1.240",
-  rwCount: "6",
-  rtCount: "24",
-  areaSize: "112,5"
+  rwCount: "7",
+  rtCount: "27",
+  areaSize: "2.63"
 };
 
 const MAP_CONFIG = {

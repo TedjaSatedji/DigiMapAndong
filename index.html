@@ -1,24 +1,29 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Portal GIS Interaktif Kelurahan Andongsili</title>
-  
+  <title>Map Digital Kelurahan Andongsili</title>
+
   <!-- Google Fonts: Outfit (Heading) & Inter (Body) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
+
   <!-- Leaflet CSS -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
-  
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+
   <!-- Custom Stylesheet -->
   <link rel="stylesheet" href="styles.css">
-  
+
   <!-- FontAwesome Icons for modern aesthetic -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
+
 <body class="hero-active">
 
   <!-- ================= HERO SECTION (LANDING VIEW) ================= -->
@@ -26,12 +31,12 @@
     <!-- Hero Background Image Overlay -->
     <div class="hero-bg" id="heroBg"></div>
     <div class="hero-overlay"></div>
-    
+
     <!-- Navigation / Top Bar -->
     <nav class="hero-nav">
       <div class="nav-logo">
-        <i class="fa-solid fa-map-location-dot logo-icon"></i>
-        <span>GIS Andongsili</span>
+        <img src="assets/icons/LogoKKNNoBackground.webp" alt="Logo KKN" class="logo-img">
+        <span>Peta Digital Andongsili</span>
       </div>
       <div class="nav-badge">
         <span class="badge-accent">KKN UPN "Veteran" Yogyakarta 2026</span>
@@ -44,7 +49,7 @@
         <span class="hero-tagline"><i class="fa-solid fa-mountain-sun"></i> Mojotengah, Wonosobo</span>
         <h1 class="hero-title" id="heroTitle">Kelurahan Andongsili</h1>
         <p class="hero-description" id="heroDesc">Loading...</p>
-        
+
         <!-- Stats Grid in Hero -->
         <div class="hero-stats-grid">
           <div class="stat-card">
@@ -72,11 +77,11 @@
             <div class="stat-icon"><i class="fa-solid fa-chart-area"></i></div>
             <div class="stat-info">
               <span class="stat-value" id="statArea">-</span>
-              <span class="stat-label">Luas Area (Ha)</span>
+              <span class="stat-label">Luas Area (km²)</span>
             </div>
           </div>
         </div>
-        
+
         <!-- Call to Action -->
         <div class="hero-cta-group">
           <button class="btn btn-primary" id="btnExplore">
@@ -95,31 +100,21 @@
 
     <!-- UI Overlay Panels -->
     <div class="map-overlays">
-      
-      <!-- Floating Sidebar Toggle for Mobile -->
-      <button class="btn-toggle-sidebar glassmorphism" id="btnToggleSidebar" title="Tampilkan Menu">
-        <i class="fa-solid fa-sliders"></i>
-      </button>
 
       <!-- 1. Floating Sidebar Panel (Left) -->
-      <aside class="floating-sidebar glassmorphism" id="floatingSidebar">
+      <aside class="floating-sidebar glassmorphism">
         <div class="sidebar-header">
           <button class="btn-back" id="btnBackToHero">
             <i class="fa-solid fa-arrow-left"></i>
             <span>Kembali ke Profil</span>
           </button>
-          
-          <button class="btn-close-sidebar" id="btnCloseSidebar" title="Tutup Menu">
-            <i class="fa-solid fa-xmark"></i>
-          </button>
-        </div>
         </div>
 
         <hr class="sidebar-divider">
 
         <div class="sidebar-body">
           <h2 class="sidebar-title">Eksplorasi Wilayah</h2>
-          
+
           <!-- Search Bar -->
           <div class="search-box">
             <i class="fa-solid fa-magnifying-glass search-icon"></i>
@@ -159,11 +154,12 @@
               </button>
             </div>
           </div>
-          
+
           <!-- Quick Info/Summary -->
           <div class="quick-info-box">
             <h4>Batas Administrasi</h4>
-            <p>Peta ini menampilkan batas administrasi resmi Kelurahan Andongsili berdasarkan data spasial Kabupaten Wonosobo.</p>
+            <p>Peta ini menampilkan batas administrasi resmi Kelurahan Andongsili berdasarkan data spasial Kabupaten
+              Wonosobo.</p>
             <div class="boundary-legend">
               <span class="legend-line"></span>
               <span class="legend-text">Batas Kelurahan Andongsili</span>
@@ -191,10 +187,12 @@
   </main>
 
   <!-- Leaflet JS -->
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-  
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
   <!-- Data & Logic JS -->
   <script src="data.js"></script>
   <script src="app.js"></script>
 </body>
+
 </html>
