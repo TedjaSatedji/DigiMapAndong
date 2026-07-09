@@ -847,9 +847,35 @@ body.dark-mode .control-btn.active {
   word-break: break-word;
 }
 
+.detail-header-block {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.header-text-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  flex-grow: 1;
+}
+
+.header-thumbnail {
+  width: 60px;
+  height: 60px;
+  border-radius: 12px;
+  background-size: cover;
+  background-position: center;
+  border: 1px solid var(--border-color);
+  flex-shrink: 0;
+  box-shadow: var(--shadow-sm);
+  margin-top: 0.5rem;
+}
+
 .detail-actions {
-  margin-top: auto;
-  padding-top: 1rem;
+  padding-top: 0.25rem;
 }
 
 .btn-route {
@@ -1124,6 +1150,7 @@ body.dark-mode .control-btn.active {
   /* Detail Drawer as a pullable bottom sheet on mobile */
   .detail-drawer {
     position: absolute;
+    top: auto; /* Reset desktop top positioning to prevent bottom gap */
     bottom: 0;
     left: 0;
     right: 0;
@@ -1195,5 +1222,32 @@ body.dark-mode .control-btn.active {
   
   .hero-stats-grid {
     grid-template-columns: 1fr;
+  }
+}
+
+/* Custom Leaflet Attribution Styling */
+.leaflet-control-attribution {
+  font-size: 8px !important;
+  background: var(--glass-bg) !important;
+  backdrop-filter: var(--glass-blur) !important;
+  -webkit-backdrop-filter: var(--glass-blur) !important;
+  border: 1px solid var(--glass-border) !important;
+  border-radius: 4px !important;
+  color: var(--text-muted) !important;
+  padding: 2px 6px !important;
+  max-width: 300px !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  transition: max-width 0.3s ease;
+}
+
+.leaflet-control-attribution:hover {
+  max-width: 100% !important; /* Expand on hover to see full credits */
+}
+
+@media (max-width: 768px) {
+  .leaflet-control-attribution {
+    max-width: 180px !important; /* Extra compact on mobile to prevent wrapping */
   }
 }

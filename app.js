@@ -267,13 +267,27 @@ document.addEventListener("DOMContentLoaded", () => {
     const meta = CATEGORY_META[location.category] || DEFAULT_META;
     
     drawerBody.innerHTML = `
+      <div class="detail-header-block">
+        <div class="header-text-container">
+          <span class="detail-category-badge" style="background-color: ${meta.color}25; color: ${meta.color};">
+            <i class="fa-solid ${meta.icon}"></i> ${location.category}
+          </span>
+          <h2 class="detail-title">${location.name}</h2>
+        </div>
+        <div class="header-thumbnail" style="background-image: url('${location.image}');"></div>
+      </div>
+      
+      <div class="detail-actions">
+        <a href="https://www.google.com/maps/dir/?api=1&destination=${location.latitude},${location.longitude}" 
+           target="_blank" 
+           class="btn btn-primary btn-route">
+          <i class="fa-solid fa-route"></i>
+          <span>Petunjuk Arah (Google Maps)</span>
+        </a>
+      </div>
+
       <div class="detail-image" style="background-image: url('${location.image}');"></div>
       
-      <span class="detail-category-badge" style="background-color: ${meta.color}25; color: ${meta.color};">
-        <i class="fa-solid ${meta.icon}"></i> ${location.category}
-      </span>
-      
-      <h2 class="detail-title">${location.name}</h2>
       <p class="detail-desc">${location.description}</p>
       
       <div class="detail-info-list">
@@ -298,15 +312,6 @@ document.addEventListener("DOMContentLoaded", () => {
             <span class="info-item-value">${location.latitude.toFixed(6)}, ${location.longitude.toFixed(6)}</span>
           </div>
         </div>
-      </div>
-      
-      <div class="detail-actions">
-        <a href="https://www.google.com/maps/dir/?api=1&destination=${location.latitude},${location.longitude}" 
-           target="_blank" 
-           class="btn btn-primary btn-route">
-          <i class="fa-solid fa-route"></i>
-          <span>Petunjuk Arah (Google Maps)</span>
-        </a>
       </div>
     `;
     
