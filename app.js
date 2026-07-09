@@ -241,24 +241,18 @@ document.addEventListener("DOMContentLoaded", () => {
     let offsetX = 0;
     let offsetY = 0;
 
-    const floatingSidebar = document.getElementById("floatingSidebar");
-
     if (window.innerWidth <= 768) {
       // Mobile Layout: bottom sheet (detailDrawer) covers the bottom of the screen
-      if (detailDrawer.classList.contains("active")) {
-        const drawerHeight = detailDrawer.offsetHeight;
-        // Shift map center down by half of the drawer height so the marker is pushed up
-        // into the center of the remaining visible area at the top
-        offsetY = drawerHeight / 2;
+      const isMobileActive = detailDrawer.classList.contains("peeking") || detailDrawer.classList.contains("expanded");
+      if (isMobileActive) {
+        const visibleHeight = window.innerHeight - (detailDrawer.classList.contains("expanded") ? detailDrawer.offsetHeight : 240);
+        const offsetPixels = (window.innerHeight - visibleHeight) / 2;
+        offsetY = offsetPixels;
       }
     } else {
-      // Desktop Layout: sidebar on the left, detailDrawer on the right
-      const sidebarWidth = floatingSidebar ? floatingSidebar.offsetWidth : 0;
+      // Desktop Layout: floating search bar on the left (approx 380px), detailDrawer on the right
+      const sidebarWidth = 380;
       const drawerWidth = detailDrawer.classList.contains("active") ? detailDrawer.offsetWidth : 0;
-
-      // The center of the visible area is: sidebarWidth + (window.innerWidth - sidebarWidth - drawerWidth) / 2
-      // The offset from true center (window.innerWidth / 2) is:
-      // (drawerWidth - sidebarWidth) / 2
       offsetX = (drawerWidth - sidebarWidth) / 2;
     }
 
@@ -316,12 +310,12 @@ document.addEventListener("DOMContentLoaded", () => {
       </div>
     `;
     
-    detailDrawer.classList.add("active");
-    
-    // Collapse sidebar on mobile when drawer is shown
-    const floatingSidebar = document.getElementById("floatingSidebar");
-    if (floatingSidebar && window.innerWidth <= 768) {
-      floatingSidebar.classList.remove("expanded");
+    if (window.innerWidth <= 768) {
+      detailDrawer.classList.remove("closed", "expanded");
+      detailDrawer.classList.add("peeking");
+      detailDrawer.style.transform = "";
+    } else {
+      detailDrawer.classList.add("active");
     }
     
     panToWithOffset([location.latitude, location.longitude]);
@@ -341,11 +335,23 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function closeDrawer() {
-    if (detailDrawer.classList.contains("active") && activeSelectedMarker) {
+    const isMobile = window.innerWidth <= 768;
+    const isCurrentlyOpen = isMobile 
+      ? (detailDrawer.classList.contains("peeking") || detailDrawer.classList.contains("expanded"))
+      : detailDrawer.classList.contains("active");
+
+    if (isCurrentlyOpen && activeSelectedMarker) {
       map.panTo(activeSelectedMarker.getLatLng());
     }
 
-    detailDrawer.classList.remove("active");
+    if (isMobile) {
+      detailDrawer.classList.remove("peeking", "expanded");
+      detailDrawer.classList.add("closed");
+      detailDrawer.style.transform = "";
+    } else {
+      detailDrawer.classList.remove("active");
+    }
+
     if (activeSelectedMarker) {
       const el = activeSelectedMarker.getElement();
       if (el) el.classList.remove("active");
@@ -379,44 +385,125 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // ================= 8. SISTEM FILTER KATEGORI =================
   const filterGroup = document.getElementById("filterGroup");
-  const activeCategories = new Set(); // Kategori yang sedang dicentang (kosong berarti tampilkan semua)
+  const activeCategories = new Set(); // Kategori yang sedang aktif
 
   // Ambil semua kategori unik dari data lokasi
   const categories = [...new Set(LOCATIONS.map(l => l.category))];
 
-  // Render checkbox filter dinamis
+  // Tambahkan semua kategori ke set aktif awal
+  categories.forEach(cat => activeCategories.add(cat));
+
+  // Render tombol pil "Semua" terlebih dahulu
+  const allPill = document.createElement("button");
+  allPill.className = "category-pill active"; // Aktif secara default
+  allPill.id = "pill-all";
+  allPill.innerHTML = `
+    <i class="fa-solid fa-border-all"></i>
+    <span>Semua</span>
+  `;
+  allPill.addEventListener("click", () => {
+    // Aktifkan kembali semua kategori
+    categories.forEach(cat => activeCategories.add(cat));
+    
+    // Update styling semua pil
+    document.querySelectorAll(".category-pill").forEach(p => p.classList.remove("active"));
+    allPill.classList.add("active");
+    
+    filterLocations();
+  });
+  filterGroup.appendChild(allPill);
+
+  // Render tombol pil kategori dinamis
   categories.forEach(cat => {
     const meta = CATEGORY_META[cat] || DEFAULT_META;
     
-    const filterItem = document.createElement("div");
-    filterItem.className = "filter-checkbox active"; // Awalnya semua aktif
-    filterItem.setAttribute("data-category", cat);
-    filterItem.innerHTML = `
-      <div class="checkbox-label">
-        <i class="fa-solid ${meta.icon}" style="color: ${meta.color};"></i>
-        <span>${cat}</span>
-      </div>
-      <div class="checkbox-indicator">
-        <i class="fa-solid fa-check"></i>
-      </div>
+    const pill = document.createElement("button");
+    pill.className = "category-pill";
+    pill.setAttribute("data-category", cat);
+    pill.innerHTML = `
+      <i class="fa-solid ${meta.icon}" style="color: ${meta.color};"></i>
+      <span>${cat}</span>
     `;
 
     // Pasang event listener click
-    filterItem.addEventListener("click", () => {
-      const isSelected = filterItem.classList.toggle("active");
+    pill.addEventListener("click", () => {
+      const wasActive = pill.classList.contains("active");
       
-      if (isSelected) {
-        activeCategories.add(cat);
+      // Reset status semua pil
+      document.querySelectorAll(".category-pill").forEach(p => p.classList.remove("active"));
+      
+      if (wasActive) {
+        // Jika sebelumnya aktif, kembalikan ke "Semua"
+        categories.forEach(catName => activeCategories.add(catName));
+        allPill.classList.add("active");
       } else {
-        activeCategories.delete(cat);
+        // Jika tidak aktif, aktifkan hanya kategori ini
+        activeCategories.clear();
+        activeCategories.add(cat);
+        pill.classList.add("active");
       }
       
       filterLocations();
     });
 
-    filterGroup.appendChild(filterItem);
-    activeCategories.add(cat); // Tambah ke set kategori aktif
+    filterGroup.appendChild(pill);
   });
+
+  // ================= 8.1 DESKTOP DRAG TO SCROLL & MOUSE WHEEL FOR CATEGORIES =================
+  if (filterGroup) {
+    // 1. Mouse Wheel Scroll (Convert vertical scroll to horizontal scroll)
+    filterGroup.addEventListener("wheel", (e) => {
+      if (e.deltaY !== 0) {
+        e.preventDefault();
+        filterGroup.scrollLeft += e.deltaY * 1.2; // Adjust scroll speed multiplier if needed
+      }
+    }, { passive: false });
+
+    // 2. Click and Drag gesture to scroll
+    let isDown = false;
+    let startX;
+    let scrollLeft;
+    let hasMoved = false;
+
+    filterGroup.addEventListener("mousedown", (e) => {
+      isDown = true;
+      hasMoved = false;
+      filterGroup.classList.add("dragging");
+      startX = e.pageX - filterGroup.offsetLeft;
+      scrollLeft = filterGroup.scrollLeft;
+    });
+
+    filterGroup.addEventListener("mouseleave", () => {
+      isDown = false;
+      filterGroup.classList.remove("dragging");
+    });
+
+    filterGroup.addEventListener("mouseup", () => {
+      isDown = false;
+      filterGroup.classList.remove("dragging");
+    });
+
+    filterGroup.addEventListener("mousemove", (e) => {
+      if (!isDown) return;
+      e.preventDefault();
+      const x = e.pageX - filterGroup.offsetLeft;
+      const walk = (x - startX) * 1.5; // Drag scroll multiplier
+      
+      if (Math.abs(x - startX) > 7) {
+        hasMoved = true;
+      }
+      
+      filterGroup.scrollLeft = scrollLeft - walk;
+    });
+
+    // Intercept and cancel clicks on child pills if we dragged
+    filterGroup.addEventListener("click", (e) => {
+      if (hasMoved) {
+        e.stopPropagation();
+        e.preventDefault();
+      }
+    }, true); // Capture phase to prevent child handlers from executing
+  }
 
   // Fungsi Filter Gabungan (Search + Kategori)
   function filterLocations() {
@@ -505,6 +592,177 @@ document.addEventListener("DOMContentLoaded", () => {
     currentTileLayer.addTo(map);
   }
 
+  // ================= 9.1 LOGIKA POPUP KONTROL MELAYANG (BASEMAP & LEGENDA) =================
+  const btnToggleBasemap = document.getElementById("btnToggleBasemap");
+  const basemapPopup = document.getElementById("basemapPopup");
+  const btnToggleLegend = document.getElementById("btnToggleLegend");
+  const legendPopup = document.getElementById("legendPopup");
+
+  function closeAllControlPopups() {
+    if (basemapPopup) {
+      basemapPopup.classList.remove("show");
+      btnToggleBasemap.classList.remove("active");
+    }
+    if (legendPopup) {
+      legendPopup.classList.remove("show");
+      btnToggleLegend.classList.remove("active");
+    }
+  }
+
+  if (btnToggleBasemap && basemapPopup) {
+    btnToggleBasemap.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const isOpen = basemapPopup.classList.contains("show");
+      closeAllControlPopups();
+      if (!isOpen) {
+        basemapPopup.classList.add("show");
+        btnToggleBasemap.classList.add("active");
+      }
+    });
+    basemapPopup.addEventListener("click", (e) => {
+      e.stopPropagation();
+    });
+  }
+
+  if (btnToggleLegend && legendPopup) {
+    btnToggleLegend.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const isOpen = legendPopup.classList.contains("show");
+      closeAllControlPopups();
+      if (!isOpen) {
+        legendPopup.classList.add("show");
+        btnToggleLegend.classList.add("active");
+      }
+    });
+    legendPopup.addEventListener("click", (e) => {
+      e.stopPropagation();
+    });
+  }
+
+  // Tutup popup jika dokumen diklik di luar
+  document.addEventListener("click", () => {
+    closeAllControlPopups();
+  });
+
+  // ================= 9.3 DETEKSI GESER TARIKAN (DRAG BOTTOM SHEET GESTURE) =================
+  let startY = 0;
+  let startTranslateY = 0;
+  let isDragging = false;
+  let sheetHeight = 0;
+
+  if (detailDrawer) {
+    detailDrawer.addEventListener("touchstart", (e) => {
+      if (window.innerWidth > 768) return;
+
+      const dragHandle = document.getElementById("drawerDragHandle");
+      const drawerBody = document.getElementById("drawerBody");
+      const touch = e.touches[0];
+
+      const isOnDragHandle = e.target === dragHandle || dragHandle.contains(e.target);
+      const isAtTopScroll = drawerBody.scrollTop <= 0;
+      const isPeeking = detailDrawer.classList.contains("peeking");
+
+      if (isOnDragHandle || isPeeking || isAtTopScroll) {
+        isDragging = true;
+        startY = touch.clientY;
+        sheetHeight = detailDrawer.offsetHeight;
+        const rect = detailDrawer.getBoundingClientRect();
+        startTranslateY = rect.top - (window.innerHeight - sheetHeight);
+        
+        detailDrawer.classList.add("no-transition");
+      }
+    }, { passive: true });
+
+    detailDrawer.addEventListener("touchmove", (e) => {
+      if (!isDragging) return;
+
+      const touch = e.touches[0];
+      const deltaY = touch.clientY - startY;
+      let newTranslateY = startTranslateY + deltaY;
+
+      const isExpanded = detailDrawer.classList.contains("expanded");
+      if (isExpanded && deltaY < 0 && e.target !== document.getElementById("drawerDragHandle")) {
+        isDragging = false;
+        detailDrawer.classList.remove("no-transition");
+        detailDrawer.style.transform = "";
+        return;
+      }
+
+      if (e.cancelable) e.preventDefault();
+
+      if (newTranslateY < 0) {
+        newTranslateY = newTranslateY * 0.3; // Elastisitas tarik lebih dari batas atas
+      }
+
+      detailDrawer.style.transform = `translateY(${newTranslateY}px)`;
+    }, { passive: false });
+
+    detailDrawer.addEventListener("touchend", (e) => {
+      if (!isDragging) return;
+      isDragging = false;
+      detailDrawer.classList.remove("no-transition");
+
+      const touch = e.changedTouches[0];
+      const deltaY = touch.clientY - startY;
+      detailDrawer.style.transform = "";
+
+      const peekTranslateY = sheetHeight - 240;
+      const currentTranslateVal = startTranslateY + deltaY;
+
+      if (deltaY > 50) {
+        // Tarik ke bawah
+        if (startTranslateY < 50) {
+          // Dari Expanded -> Peek
+          detailDrawer.classList.remove("expanded", "closed");
+          detailDrawer.classList.add("peeking");
+        } else {
+          // Dari Peek -> Tutup
+          closeDrawer();
+        }
+      } else if (deltaY < -50) {
+        // Tarik ke atas -> Expanded
+        detailDrawer.classList.remove("peeking", "closed");
+        detailDrawer.classList.add("expanded");
+      } else {
+        // Geseran kecil, kembalikan ke snap terdekat
+        if (currentTranslateVal < peekTranslateY / 2) {
+          detailDrawer.classList.remove("peeking", "closed");
+          detailDrawer.classList.add("expanded");
+        } else if (currentTranslateVal < (sheetHeight - 50)) {
+          detailDrawer.classList.remove("expanded", "closed");
+          detailDrawer.classList.add("peeking");
+        } else {
+          closeDrawer();
+        }
+      }
+    });
+
+    // Menghubungkan klik dragHandle pada mobile untuk toggle expanded/peeking
+    const dragHandle = document.getElementById("drawerDragHandle");
+    if (dragHandle) {
+      dragHandle.addEventListener("click", () => {
+        if (window.innerWidth <= 768) {
+          if (detailDrawer.classList.contains("peeking")) {
+            detailDrawer.classList.remove("peeking");
+            detailDrawer.classList.add("expanded");
+          } else if (detailDrawer.classList.contains("expanded")) {
+            detailDrawer.classList.remove("expanded");
+            detailDrawer.classList.add("peeking");
+          }
+        }
+      });
+    }
+  }
+
+  // Focus pencarian otomatis menggeser detailDrawer ke bawah agar pencarian leluasa
+  if (searchInput) {
+    searchInput.addEventListener("focus", () => {
+      if (window.innerWidth <= 768 && (detailDrawer.classList.contains("peeking") || detailDrawer.classList.contains("expanded"))) {
+        closeDrawer();
+      }
+    });
+  }
+
   // ================= 9.5 KOORDINAT PICKER (DEVELOPER HELPER) =================
   // Hanya aktif secara lokal (file://, localhost) atau jika URL mengandung '?dev=true' / '?admin=true'
   const urlParams = new URLSearchParams(window.location.search);
@@ -517,7 +775,6 @@ document.addEventListener("DOMContentLoaded", () => {
     console.log("Developer Mode Aktif: Klik pada peta untuk menyalin format objek lokasi baru.");
     
     map.on("click", (e) => {
-      // Abaikan jika klik dilakukan pada marker
       if (e.originalEvent && e.originalEvent.target && e.originalEvent.target.closest('.leaflet-marker-icon')) return;
 
       const lat = e.latlng.lat.toFixed(6);
@@ -558,55 +815,12 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // ================= 9.7 INTERAKSI MOBILE (BOTTOM SHEET & ACCORDION) =================
-  // Toggle status accordion (Filter, Basemap, Legenda)
-  document.querySelectorAll(".collapsible-header").forEach(header => {
-    header.addEventListener("click", () => {
-      const section = header.parentElement;
-      section.classList.toggle("collapsed");
-      
-      // Paksa map.invalidateSize() jika layout berubah agar Leaflet memuat ubin dengan benar
-      setTimeout(() => {
-        map.invalidateSize();
-      }, 300);
-    });
-  });
-
-  // Collapse basemap & legenda secara default jika di perangkat seluler (mobile)
-  if (window.innerWidth <= 768) {
-    const basemapSection = document.getElementById("headerBasemap")?.parentElement;
-    const legendSection = document.getElementById("headerLegend")?.parentElement;
-    if (basemapSection) basemapSection.classList.add("collapsed");
-    if (legendSection) legendSection.classList.add("collapsed");
-  }
-
-  // Pengelolaan status Bottom Sheet Sidebar
-  const floatingSidebar = document.getElementById("floatingSidebar");
-  const sidebarDragHandle = document.getElementById("sidebarDragHandle");
-
-  if (floatingSidebar && sidebarDragHandle) {
-    // Klik pada drag handle akan membuka/menutup sidebar
-    sidebarDragHandle.addEventListener("click", () => {
-      floatingSidebar.classList.toggle("expanded");
-    });
-
-    // Mengetik/Fokus pada search input otomatis membuka sidebar secara penuh
-    if (searchInput) {
-      searchInput.addEventListener("focus", () => {
-        floatingSidebar.classList.add("expanded");
-      });
-    }
-  }
-
-  // Menutup drawer & collapse sidebar ketika mengklik area kosong peta
+  // Menutup drawer & control popups ketika mengklik area kosong peta
   map.on("click", (e) => {
-    // Abaikan jika klik dilakukan pada marker
     if (e.originalEvent && e.originalEvent.target && e.originalEvent.target.closest('.leaflet-marker-icon')) return;
 
     closeDrawer();
-    if (floatingSidebar) {
-      floatingSidebar.classList.remove("expanded");
-    }
+    closeAllControlPopups();
   });
 
   // ================= 10. HELPER UNTUK MENGISI DATA PROFIL =================

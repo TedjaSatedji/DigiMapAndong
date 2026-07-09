@@ -101,47 +101,39 @@
     <!-- UI Overlay Panels -->
     <div class="map-overlays">
 
-      <!-- 1. Floating Sidebar Panel (Left) -->
-      <aside class="floating-sidebar glassmorphism" id="floatingSidebar">
-        <!-- Drag Handle for Mobile Bottom Sheet -->
-        <div class="drag-handle" id="sidebarDragHandle"></div>
-
-        <div class="sidebar-header">
-          <button class="btn-back" id="btnBackToHero">
+      <!-- Floating Header Container (Search & Categories on Top) -->
+      <div class="floating-header-container">
+        <!-- Search Bar -->
+        <div class="floating-search-bar glassmorphism">
+          <button class="btn-search-back" id="btnBackToHero" title="Kembali ke Profil">
             <i class="fa-solid fa-arrow-left"></i>
-            <span>Kembali ke Profil</span>
           </button>
+          <div class="search-input-wrapper">
+            <input type="text" id="searchInput" placeholder="Cari fasilitas/lokasi...">
+            <button class="clear-search" id="btnClearSearch" title="Hapus pencarian">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+          </div>
+          <div class="search-icon-btn">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </div>
         </div>
 
-        <hr class="sidebar-divider">
+        <!-- Horizontal Category Pills -->
+        <div class="floating-categories-container" id="filterGroup">
+          <!-- Dynamically populated category pills in app.js -->
+        </div>
+      </div>
 
-        <div class="sidebar-body">
-          <h2 class="sidebar-title">Eksplorasi Wilayah</h2>
-
-          <!-- Search Bar -->
-          <div class="search-box">
-            <i class="fa-solid fa-magnifying-glass search-icon"></i>
-            <input type="text" id="searchInput" placeholder="Cari fasilitas/lokasi...">
-            <button class="clear-search" id="btnClearSearch"><i class="fa-solid fa-xmark"></i></button>
-          </div>
-
-          <!-- Category Filters -->
-          <div class="filter-section">
-            <h3 class="filter-title collapsible-header" id="headerCategory">
-              <span>Kategori Fasilitas</span>
-              <i class="fa-solid fa-chevron-down toggle-icon"></i>
-            </h3>
-            <div class="filter-group" id="filterGroup">
-              <!-- Dynamically rendered filters based on categories -->
-            </div>
-          </div>
-
-          <!-- Basemap Selector -->
-          <div class="filter-section">
-            <h3 class="filter-title collapsible-header" id="headerBasemap">
-              <span>Tipe Peta (Basemap)</span>
-              <i class="fa-solid fa-chevron-down toggle-icon"></i>
-            </h3>
+      <!-- Floating Map Controls (Right Side) -->
+      <div class="floating-map-controls">
+        <!-- Basemap Control -->
+        <div class="map-control-item basemap-control">
+          <button class="control-btn" id="btnToggleBasemap" title="Tipe Peta (Basemap)">
+            <i class="fa-solid fa-layer-group"></i>
+          </button>
+          <div class="control-popup basemap-popup glassmorphism" id="basemapPopup">
+            <h4 class="popup-title-header">Pilih Peta</h4>
             <div class="basemap-group" id="basemapGroup">
               <button class="basemap-card active" data-basemap="light" title="Peta Terang">
                 <div class="basemap-thumbnail light-thumb">
@@ -163,16 +155,17 @@
               </button>
             </div>
           </div>
+        </div>
 
-          <!-- Quick Info/Summary (now as a filter section) -->
-          <div class="filter-section">
-            <h3 class="filter-title collapsible-header" id="headerLegend">
-              <span>Batas Administrasi</span>
-              <i class="fa-solid fa-chevron-down toggle-icon"></i>
-            </h3>
+        <!-- Legend Control -->
+        <div class="map-control-item legend-control">
+          <button class="control-btn" id="btnToggleLegend" title="Batas Administrasi & Legenda">
+            <i class="fa-solid fa-circle-info"></i>
+          </button>
+          <div class="control-popup legend-popup glassmorphism" id="legendPopup">
+            <h4 class="popup-title-header">Batas Wilayah</h4>
             <div class="quick-info-box">
-              <p>Peta ini menampilkan batas administrasi resmi Kelurahan Andongsili berdasarkan data spasial Kabupaten
-                Wonosobo.</p>
+              <p>Peta ini menampilkan batas administrasi resmi Kelurahan Andongsili berdasarkan data spasial Kabupaten Wonosobo.</p>
               <div class="boundary-legend">
                 <span class="legend-line"></span>
                 <span class="legend-text">Batas Kelurahan Andongsili</span>
@@ -180,9 +173,9 @@
             </div>
           </div>
         </div>
-      </aside>
+      </div>
 
-      <!-- 2. Sliding Detail Panel / Drawer (Right) -->
+      <!-- 2. Sliding Detail Panel / Drawer (Right/Bottom Sheet) -->
       <article class="detail-drawer glassmorphism" id="detailDrawer">
         <!-- Drag Handle for Mobile Bottom Sheet -->
         <div class="drag-handle" id="drawerDragHandle"></div>
@@ -195,7 +188,7 @@
           <!-- Dynamically populated detail information -->
           <div class="drawer-placeholder">
             <i class="fa-solid fa-map-location-dot"></i>
-            <p>Pilih salah satu penanda di peta atau cari lokasi di sidebar untuk melihat informasi lengkap.</p>
+            <p>Pilih salah satu penanda di peta atau cari lokasi untuk melihat informasi lengkap.</p>
           </div>
         </div>
       </article>
