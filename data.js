@@ -94,6 +94,17 @@ const LOCATIONS = [
     address: "Alamat.",
     image: "https://images.unsplash.com/photo-1541829019-2188201b83a0?auto=format&fit=crop&w=600&q=80",
     contact: "-"
+  },
+  {
+    id: 7,
+    name: "Dinas Perhubungan",
+    category: "Pemerintahan",
+    latitude: -7.327379,
+    longitude: 109.915378,
+    description: "Dinas Perumahan Kawasan Permukiman Dan Perhubungan",
+    address: "Alamat.",
+    image: "https://images.unsplash.com/photo-1541829019-2188201b83a0?auto=format&fit=crop&w=600&q=80",
+    contact: "-"
   }
 ];
 

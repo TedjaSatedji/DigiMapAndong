@@ -426,6 +426,28 @@ body.map-active .map-section {
   outline: none;
 }
 
+.clear-search {
+  background: none;
+  border: none;
+  color: #ffffff;
+  opacity: 0.7;
+  font-size: 1.1rem;
+  padding: 0 0.5rem;
+  cursor: pointer;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  transition: opacity var(--transition-fast);
+}
+
+.clear-search.active {
+  display: flex;
+}
+
+.clear-search:hover {
+  opacity: 1;
+}
+
 .search-icon-btn {
   width: 40px;
   height: 40px;
@@ -983,38 +1005,38 @@ body.dark-mode .control-btn.active {
 }
 
 .marker-pin {
-  width: 36px;
-  height: 36px;
+  width: 24px;
+  height: 24px;
   border-radius: 50% 50% 50% 0;
   background: var(--accent-color);
   position: absolute;
-  transform: rotate(-45deg);
+  transform: rotate(-45deg) scale(var(--marker-zoom-scale, 1));
   left: 50%;
   top: 50%;
-  margin: -18px 0 0 -18px;
+  margin: -12px 0 0 -12px;
   display: flex;
   align-items: center;
   justify-content: center;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
-  border: 2px solid #ffffff;
-  transition: all var(--transition-fast);
+  border: 1px solid #ffffff;
+  transition: transform var(--transition-normal), background-color var(--transition-fast), box-shadow var(--transition-fast);
 }
 
 .marker-pin i {
   transform: rotate(45deg);
   color: #ffffff;
-  font-size: 1.05rem;
+  font-size: 0.75rem;
 }
 
 .marker-pin::after {
   content: '';
-  width: 14px;
-  height: 14px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
   background: rgba(0, 0, 0, 0.2);
   position: absolute;
-  bottom: -9px;
-  left: 11px;
+  bottom: -6px;
+  left: 7px;
   transform: rotate(45deg);
   filter: blur(2px);
   z-index: -1;
@@ -1022,7 +1044,7 @@ body.dark-mode .control-btn.active {
 
 .custom-div-icon.active .marker-pin {
   background: #ef4444; /* red pin for active */
-  transform: rotate(-45deg) scale(1.15);
+  transform: rotate(-45deg) scale(calc(var(--marker-zoom-scale, 1) * 1.15));
   box-shadow: 0 6px 12px rgba(239, 68, 68, 0.4);
 }
 

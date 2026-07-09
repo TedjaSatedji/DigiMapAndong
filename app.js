@@ -35,6 +35,19 @@ document.addEventListener("DOMContentLoaded", () => {
     position: "bottomright"
   }).addTo(map);
 
+  // Logika Skala Marker Dinamis berdasarkan Zoom Level Peta
+  function updateMarkerScale() {
+    const currentZoom = map.getZoom();
+    const baseZoom = 15; // Zoom default di data.js
+    // Hitung skala: makin zoom out (<15) makin kecil, makin zoom in (>15) makin besar
+    // Dibatasi antara 0.45 (sangat kecil saat zoom out jauh) hingga 1.3 (saat zoom in dekat)
+    const scale = Math.max(0.45, Math.min(1.3, 1 + (currentZoom - baseZoom) * 0.12));
+    map.getContainer().style.setProperty('--marker-zoom-scale', scale);
+  }
+  
+  map.on("zoomend", updateMarkerScale);
+  updateMarkerScale(); // Jalankan sekali di awal untuk inisialisasi skala
+
   // Definisi Tile Layers (Light, Dark, & Satellite Hybrid)
   const TILE_ATTRIBUTION = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>';
   const TILE_LIGHT_URL = "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png";
@@ -171,9 +184,9 @@ document.addEventListener("DOMContentLoaded", () => {
                  <i class="fa-solid ${meta.icon}"></i>
                </div>`,
         className: "custom-div-icon",
-        iconSize: [36, 36],
-        iconAnchor: [18, 36],
-        popupAnchor: [0, -32]
+        iconSize: [24, 24],
+        iconAnchor: [12, 24],
+        popupAnchor: [0, -22]
       });
 
       // Buat marker Leaflet
