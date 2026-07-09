@@ -6,7 +6,7 @@ Aplikasi web ini bersifat **statis penuh (client-side only)** dan berfokus penuh
 
 ---
 
-## User Review Required
+## User Reviews Required
 
 > [!IMPORTANT]
 > **Poin Penting Desain & Layout (Hero & Map Transition):**
