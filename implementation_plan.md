@@ -96,7 +96,7 @@ Logika interaktivitas:
 
 ## Verification Plan
 
-### Manual Verification
+### Manual Verifications
 1. **Transisi Lancar:** Memastikan ketika mengklik "Mulai Penjelajahan Peta", Hero Section bergeser ke atas dengan mulus dan peta memuat marker secara instan.
 2. **Pencarian Terarah:** Mengetik nama sekolah/kantor di kotak pencarian, memicu auto-focus kamera Leaflet menuju pin marker yang bersangkutan dan membuka panel detailnya.
 3. **Uji Responsif Panel:** Memastikan di layar ponsel pintar (smartphone), panel detail tampil sebagai lembaran bawah (*bottom sheet*) yang dapat disembunyikan agar navigasi peta tetap leluasa.
