@@ -37,7 +37,7 @@ const LOCATIONS = [
     longitude: 109.921981,
     description: "Kantor Kelurahan Andongsili merupakan pusat pelayanan administrasi dan pemerintahan tingkat kelurahan di Kecamatan Mojotengah. Fasilitas ini menyediakan berbagai layanan kependudukan, perizinan lokal, serta koordinasi pembangunan wilayah bagi masyarakat setempat.",
     address: "Alamat.",
-    image: "https://images.unsplash.com/photo-1541829019-2188201b83a0?auto=format&fit=crop&w=600&q=80",
+    image: "assets/photos/kelurahan/KantorKelurahan.webp",
     contact: "-",
     hours: "Senin - Kamis: 08.00 - 15.00, Jumat: 08.00 - 11.00, Sabtu - Minggu: Tutup"
   },

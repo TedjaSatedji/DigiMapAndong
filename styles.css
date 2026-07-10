@@ -66,14 +66,20 @@ body.dark-mode {
   box-sizing: border-box;
 }
 
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100dvh;
+  width: 100vw;
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+
 body {
   font-family: var(--font-body);
   color: var(--text-main);
   background-color: var(--bg-primary);
   line-height: 1.5;
-  overflow: hidden;
-  height: 100dvh;
-  width: 100vw;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -126,7 +132,7 @@ body.dark-mode .btn-primary {
 
 /* ================= HERO SECTION (LANDING VIEW) ================= */
 .hero-section {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
@@ -146,6 +152,7 @@ body.dark-mode .btn-primary {
   justify-content: space-between;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
+  overscroll-behavior: none;
 }
 
 .hero-bg {
@@ -309,7 +316,7 @@ body.dark-mode .btn-primary {
 
 /* ================= MAP SECTION (GIS EXPLORER) ================= */
 .map-section {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
@@ -317,8 +324,6 @@ body.dark-mode .btn-primary {
   z-index: 10;
   opacity: 0;
   pointer-events: none;
-  transform: scale(0.95);
-  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.8s ease-out;
 }
 
 #map {
@@ -1017,6 +1022,7 @@ body.dark-mode .btn-route-wide {
 .drawer-body {
   height: 100%;
   overflow-y: auto;
+  overscroll-behavior: none;
   display: flex;
   flex-direction: column;
   gap: 0;
@@ -1551,19 +1557,68 @@ body.dark-mode .btn-route-wide {
 
 @media (max-width: 480px) {
   .hero-nav {
-    padding: 1rem;
+    padding: 0.75rem 1rem;
+    gap: 0.5rem;
+  }
+  
+  .logo-img {
+    height: 32px;
   }
   
   .hero-content {
-    padding: 0 1rem 1.5rem 1rem;
+    padding: 0 1rem 1rem 1rem;
   }
   
   .hero-title {
-    font-size: 1.85rem;
+    font-size: 1.65rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .hero-description {
+    font-size: 0.85rem;
+    margin-bottom: 1.25rem;
+    line-height: 1.4;
+  }
+  
+  .hero-tagline {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.65rem;
+    margin-bottom: 1rem;
   }
   
   .hero-stats-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .stat-card {
+    padding: 0.6rem;
+    gap: 0.5rem;
+  }
+
+  .stat-icon {
+    width: 32px;
+    height: 32px;
+    font-size: 1rem;
+    border-radius: 8px;
+  }
+
+  .stat-value {
+    font-size: 0.95rem;
+  }
+
+  .stat-label {
+    font-size: 0.6rem;
+  }
+
+  .hero-cta-group {
+    margin-top: 0.5rem;
+  }
+
+  .btn {
+    padding: 0.6rem 1.2rem;
+    font-size: 0.85rem;
   }
 }
 
