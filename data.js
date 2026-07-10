@@ -35,7 +35,7 @@ const LOCATIONS = [
     category: "Pemerintahan",
     latitude: -7.326277,
     longitude: 109.921981,
-    description: "Kantor Kelurahan Andongsili merupakan salah satu fasilitas publik yang menyediakan berbagai layanan administrasi bagi masyarakat setempat.",
+    description: "Kantor Kelurahan Andongsili merupakan pusat pelayanan administrasi dan pemerintahan tingkat kelurahan di Kecamatan Mojotengah. Fasilitas ini menyediakan berbagai layanan kependudukan, perizinan lokal, serta koordinasi pembangunan wilayah bagi masyarakat setempat.",
     address: "Alamat.",
     image: "https://images.unsplash.com/photo-1541829019-2188201b83a0?auto=format&fit=crop&w=600&q=80",
     contact: "-"
@@ -46,7 +46,7 @@ const LOCATIONS = [
     category: "Kesehatan",
     latitude: -7.326974,
     longitude: 109.916962,
-    description: ".",
+    description: "Markas Palang Merah Indonesia (PMI) Kabupaten Wonosobo yang melayani pelayanan donor darah, bank darah, pertolongan pertama pada kecelakaan (P3K), kesiapsiagaan bencana, serta penyediaan armada ambulans darurat.",
     address: "Alamat.",
     image: "https://images.unsplash.com/photo-1541829019-2188201b83a0?auto=format&fit=crop&w=600&q=80",
     contact: "-"
@@ -57,7 +57,7 @@ const LOCATIONS = [
     category: "Tempat Ibadah",
     latitude: -7.325999,
     longitude: 109.922769,
-    description: "Masjid Al-Istiqomah merupakan salah satu fasilitas umum yang menyediakan berbagai layanan administrasi bagi masyarakat setempat.",
+    description: "Masjid Al-Istiqomah merupakan masjid jami' di Kelurahan Andongsili yang aktif menyelenggarakan shalat berjamaah lima waktu, shalat Jumat, serta pengajian rutin warga. Masjid ini juga menjadi pusat kegiatan keagamaan dan pembinaan mental spiritual umat.",
     address: "Alamat.",
     image: "https://images.unsplash.com/photo-1541829019-2188201b83a0?auto=format&fit=crop&w=600&q=80",
     contact: "-"
@@ -68,7 +68,7 @@ const LOCATIONS = [
     category: "Pendidikan",
     latitude: -7.324837,
     longitude: 109.921961,
-    description: "Deskripsi singkat.",
+    description: "Sekolah Dasar Negeri Andongsili merupakan lembaga pendidikan dasar negeri formal di Kelurahan Andongsili yang berkomitmen mencetak generasi cerdas, berkarakter mulia, serta aktif dalam kegiatan akademis maupun ekstrakurikuler.",
     address: "Alamat.",
     image: "https://images.unsplash.com/photo-1541829019-2188201b83a0?auto=format&fit=crop&w=600&q=80",
     contact: "-"
@@ -79,7 +79,7 @@ const LOCATIONS = [
     category: "Pendidikan",
     latitude: -7.326638,
     longitude: 109.912848,
-    description: "Universitas Sains Al-Qur'an (UNSIQ) merupakan salah satu fasilitas umum yang menyediakan berbagai layanan administrasi bagi masyarakat setempat.",
+    description: "Kampus II Universitas Sains Al-Qur'an (UNSIQ) Jawa Tengah di Wonosobo, sebuah perguruan tinggi swasta terkemuka yang memadukan pendidikan sains modern dengan pengkajian dan implementasi nilai-nilai luhur Al-Qur'an.",
     address: "Alamat.",
     image: "https://images.unsplash.com/photo-1541829019-2188201b83a0?auto=format&fit=crop&w=600&q=80",
     contact: "-"
@@ -90,7 +90,7 @@ const LOCATIONS = [
     category: "Tempat Ibadah",
     latitude: -7.325269,
     longitude: 109.922223,
-    description: "Deskripsi singkat.",
+    description: "Mushola lingkungan di Kelurahan Andongsili yang diperuntukkan bagi warga sekitar dalam melaksanakan ibadah shalat berjamaah lima waktu, belajar membaca Al-Qur'an (TPA) bagi anak-anak, serta musyawarah keagamaan warga.",
     address: "Alamat.",
     image: "https://images.unsplash.com/photo-1541829019-2188201b83a0?auto=format&fit=crop&w=600&q=80",
     contact: "-"
@@ -101,7 +101,41 @@ const LOCATIONS = [
     category: "Pemerintahan",
     latitude: -7.327379,
     longitude: 109.915378,
-    description: "Dinas Perumahan Kawasan Permukiman Dan Perhubungan",
+    description: "Kantor Dinas Perumahan, Kawasan Permukiman, dan Perhubungan Kabupaten Wonosobo yang bertugas dalam pengaturan transportasi darat, tata kelola lalu lintas, serta penyediaan fasilitas keselamatan jalan umum.",
+    address: "Alamat.",
+    image: "https://images.unsplash.com/photo-1541829019-2188201b83a0?auto=format&fit=crop&w=600&q=80",
+    contact: "-"
+  },
+  {
+    id: 8,
+    name: "Amaliyah Salaman Mosque",
+    category: "Tempat Ibadah",
+    latitude: -7.314744,
+    longitude: 109.940185,
+    description: "Masjid jami' yang berlokasi di Dusun Salaman, berfungsi sebagai tempat ibadah shalat lima waktu, shalat Jumat berjamaah, pengajian umum berkala, serta program pembinaan akhlak anak-anak di lingkungan setempat.",
+    address: "Alamat.",
+    image: "https://images.unsplash.com/photo-1541829019-2188201b83a0?auto=format&fit=crop&w=600&q=80",
+    contact: "-"
+  },
+  {
+    id: 9,
+    name: "Masjid Nurul Huda. Dusun Panggrungan",
+    category: "Tempat Ibadah",
+    latitude: -7.319531,
+    longitude: 109.935105,
+    description: "Masjid Dusun Panggrungan yang merupakan sentra peribadatan dan pusat keagamaan bagi warga setempat di Dusun Panggrungan, Kelurahan Andongsili, dilengkapi dengan program majelis taklim dan pengajaran Al-Qur'an.",
+    address: "Alamat.",
+    image: "https://images.unsplash.com/photo-1541829019-2188201b83a0?auto=format&fit=crop&w=600&q=80",
+    contact: "-",
+    googleMapsUrl: "https://maps.app.goo.gl/zugn1RDEs9qvDweY8"
+  },
+  {
+    id: 10,
+    name: "Masjid Haji Kosim Kusmana",
+    category: "Tempat Ibadah",
+    latitude: -7.321526,
+    longitude: 109.926436,
+    description: "Masjid yang didirikan atas prakarsa dan wakaf keluarga Haji Kosim Kusmana. Masjid ini memfasilitasi ibadah sehari-hari warga sekitar, pengajian rutin, serta berbagai program pembinaan sosial keagamaan kemasyarakatan.",
     address: "Alamat.",
     image: "https://images.unsplash.com/photo-1541829019-2188201b83a0?auto=format&fit=crop&w=600&q=80",
     contact: "-"

@@ -279,7 +279,11 @@ document.addEventListener("DOMContentLoaded", () => {
   function showLocationDetails(location, leafletMarker) {
     const meta = CATEGORY_META[location.category] || DEFAULT_META;
     
-    drawerBody.innerHTML = `
+      const mapsUrl = location.googleMapsUrl || 
+        (location.name ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(location.name + ', Andongsili, Wonosobo')}` 
+                       : `https://www.google.com/maps/search/?api=1&query=${location.latitude},${location.longitude}`);
+
+      drawerBody.innerHTML = `
       <div class="detail-header-block">
         <div class="header-text-container">
           <span class="detail-category-badge" style="background-color: ${meta.color}25; color: ${meta.color};">
@@ -291,7 +295,7 @@ document.addEventListener("DOMContentLoaded", () => {
       </div>
       
       <div class="detail-actions">
-        <a href="https://www.google.com/maps/dir/?api=1&destination=${location.latitude},${location.longitude}" 
+        <a href="${mapsUrl}" 
            target="_blank" 
            class="btn btn-primary btn-route">
           <i class="fa-solid fa-route"></i>
