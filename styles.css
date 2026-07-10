@@ -135,7 +135,7 @@ body.dark-mode .btn-primary {
   flex-direction: column;
   justify-content: space-between;
   z-index: 100;
-  transition: transform var(--transition-slow), opacity var(--transition-slow);
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.8s ease-out;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
 }
@@ -309,8 +309,8 @@ body.dark-mode .btn-primary {
   z-index: 10;
   opacity: 0;
   pointer-events: none;
-  transition: transform var(--transition-slow), opacity var(--transition-slow);
-  transform: translateY(100px);
+  transform: scale(0.95);
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.8s ease-out;
 }
 
 #map {
@@ -337,26 +337,30 @@ body.hero-active .hero-section {
   transform: none;
   opacity: 1;
   pointer-events: auto;
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.8s ease-out;
 }
 
 body.hero-active .map-section {
-  transform: translateY(100px);
+  transform: scale(0.95);
   opacity: 0;
   pointer-events: none;
+  transition: transform 0.6s ease-in, opacity 0.6s ease-in;
 }
 
 body.map-active .hero-section {
-  transform: translateY(-100%);
+  transform: translateY(-100%) scale(0.95);
   opacity: 0;
   pointer-events: none;
   z-index: 1; /* Drop z-index when inactive */
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.8s ease-out;
 }
 
 body.map-active .map-section {
-  transform: translateY(0);
+  transform: scale(1);
   opacity: 1;
   pointer-events: auto;
   z-index: 100; /* Raise z-index above hero section */
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.8s ease-out;
 }
 
 /* ================= FLOATING HEADER (SEARCH & CATEGORIES) ================= */
@@ -369,9 +373,19 @@ body.map-active .map-section {
   flex-direction: row; /* Horizontal on desktop */
   align-items: center;
   gap: 16px;
-  width: calc(100% - 40px); /* Stretch to the right margin of the page */
+  width: calc(100% - 120px); /* Leave 100px gap on the right to clear layer controls */
   pointer-events: none; /* Make container itself transparent to clicks */
-  transition: transform var(--transition-normal);
+  transition: transform 0.4s ease-in, opacity 0.4s ease-in;
+  transform: translateY(-50px);
+  opacity: 0;
+}
+
+body.map-active .floating-header-container {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.8s ease-out;
+  transition-delay: 0.25s;
 }
 
 .floating-search-bar {
@@ -531,7 +545,18 @@ body.dark-mode .category-pill.active {
   display: flex;
   flex-direction: column;
   gap: 12px;
+  pointer-events: none;
+  transition: transform 0.4s ease-in, opacity 0.4s ease-in;
+  transform: translateX(50px);
+  opacity: 0;
+}
+
+body.map-active .floating-map-controls {
+  transform: translateX(0);
+  opacity: 1;
   pointer-events: auto;
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.8s ease-out;
+  transition-delay: 0.35s;
 }
 
 .map-control-item {
@@ -1245,6 +1270,32 @@ body.dark-mode .btn-route-wide {
   border: none;
 }
 
+.marker-label {
+  position: absolute;
+  left: 28px;
+  top: 50%;
+  transform: translateY(-50%) scale(0.9);
+  background-color: var(--bg-surface-solid);
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+  font-family: var(--font-body);
+  font-size: 0.6rem;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 6px;
+  white-space: nowrap;
+  box-shadow: var(--shadow-sm);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity var(--transition-fast), transform var(--transition-fast);
+  z-index: 1000;
+}
+
+.show-labels .marker-label {
+  opacity: 1;
+  transform: translateY(-50%) scale(1);
+}
+
 .marker-pin {
   width: 24px;
   height: 24px;
@@ -1327,6 +1378,25 @@ body.dark-mode .btn-route-wide {
     height: 100dvh;
     justify-content: flex-start;
   }
+
+  .hero-content {
+    justify-content: center;
+  }
+
+  .hero-text-container {
+    text-align: center;
+  }
+
+  .hero-description {
+    font-size: 1rem;
+    margin-bottom: 2rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .stat-card {
+    text-align: left;
+  }
   
   .map-section {
     height: 100dvh;
@@ -1334,11 +1404,6 @@ body.dark-mode .btn-route-wide {
   
   .hero-title {
     font-size: 2.25rem;
-  }
-  
-  .hero-description {
-    font-size: 1rem;
-    margin-bottom: 2rem;
   }
   
   /* Show Drag Handle on Mobile */

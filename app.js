@@ -16,7 +16,12 @@ document.addEventListener("DOMContentLoaded", () => {
     // Invalidate Leaflet map size setelah transisi CSS selesai agar render ubin peta rapi
     setTimeout(() => {
       map.invalidateSize();
-    }, 600);
+      // Smoothly fly into the map coordinates with zoom-in effect
+      map.flyTo(MAP_CONFIG.center, MAP_CONFIG.zoom, {
+        duration: 1.5,
+        easeLinearity: 0.25
+      });
+    }, 800);
   });
 
   btnBackToHero.addEventListener("click", () => {
@@ -33,31 +38,45 @@ document.addEventListener("DOMContentLoaded", () => {
     } else {
       document.body.classList.remove("map-active");
       document.body.classList.add("hero-active");
+      
+      // Reset map zoom level after the transition finishes so it's ready for the next entrance fly-in
+      setTimeout(() => {
+        map.setView(MAP_CONFIG.center, MAP_CONFIG.zoom - 1.5, { animate: false });
+      }, 800);
     }
   });
 
   // ================= 3. INISIALISASI PETA LEAFLET =================
   const map = L.map("map", {
-    zoomControl: false // Kita pasang zoom control custom di sisi kanan nanti
-  }).setView(MAP_CONFIG.center, MAP_CONFIG.zoom);
+    zoomControl: false, // Kita pasang zoom control custom di sisi kanan nanti
+    renderer: L.svg({ padding: 2.0 }) // Pre-render vectors far outside viewport to avoid zoom clipping
+  }).setView(MAP_CONFIG.center, MAP_CONFIG.zoom - 1.5);
 
   // Tambahkan zoom control di sudut kanan bawah agar tidak menabrak sidebar
   L.control.zoom({
     position: "bottomright"
   }).addTo(map);
 
-  // Logika Skala Marker Dinamis berdasarkan Zoom Level Peta
-  function updateMarkerScale() {
+  // Logika Skala Marker Dinamis & Visibilitas Label berdasarkan Zoom Level Peta
+  function updateMarkerScaleAndLabels() {
     const currentZoom = map.getZoom();
     const baseZoom = 15; // Zoom default di data.js
     // Hitung skala: makin zoom out (<15) makin kecil, makin zoom in (>15) makin besar
     // Dibatasi antara 0.45 (sangat kecil saat zoom out jauh) hingga 1.3 (saat zoom in dekat)
     const scale = Math.max(0.45, Math.min(1.3, 1 + (currentZoom - baseZoom) * 0.12));
-    map.getContainer().style.setProperty('--marker-zoom-scale', scale);
+    const container = map.getContainer();
+    container.style.setProperty('--marker-zoom-scale', scale);
+
+    // Tampilkan label nama jika zoom level >= 17
+    if (currentZoom >= 17) {
+      container.classList.add("show-labels");
+    } else {
+      container.classList.remove("show-labels");
+    }
   }
   
-  map.on("zoomend", updateMarkerScale);
-  updateMarkerScale(); // Jalankan sekali di awal untuk inisialisasi skala
+  map.on("zoomend", updateMarkerScaleAndLabels);
+  updateMarkerScaleAndLabels(); // Jalankan sekali di awal untuk inisialisasi skala
 
   // Definisi Tile Layers (Light, Dark, & Satellite Hybrid)
   const TILE_ATTRIBUTION = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>';
@@ -193,7 +212,8 @@ document.addEventListener("DOMContentLoaded", () => {
       const customIcon = L.divIcon({
         html: `<div class="marker-pin" style="background-color: ${meta.color};">
                  <i class="fa-solid ${meta.icon}"></i>
-               </div>`,
+               </div>
+               <span class="marker-label">${loc.name}</span>`,
         className: "custom-div-icon",
         iconSize: [24, 24],
         iconAnchor: [12, 24],
