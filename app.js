@@ -269,7 +269,7 @@ document.addEventListener("DOMContentLoaded", () => {
       // Mobile Layout: bottom sheet (detailDrawer) covers the bottom of the screen
       const isMobileActive = detailDrawer.classList.contains("peeking") || detailDrawer.classList.contains("expanded");
       if (isMobileActive) {
-        const visibleHeight = window.innerHeight - (detailDrawer.classList.contains("expanded") ? detailDrawer.offsetHeight : 240);
+        const visibleHeight = window.innerHeight - (detailDrawer.classList.contains("expanded") ? detailDrawer.offsetHeight : 280);
         const offsetPixels = (window.innerHeight - visibleHeight) / 2;
         offsetY = offsetPixels;
       }
@@ -318,80 +318,44 @@ document.addEventListener("DOMContentLoaded", () => {
           </span>
         </div>
 
-        <!-- Tabs Navigation -->
-        <div class="detail-tabs">
-          <button class="tab-btn active" data-tab="overview">Ringkasan</button>
-          <button class="tab-btn" data-tab="about">Tentang</button>
+        <!-- Action Button Row -->
+        <div class="detail-action-row">
+          <a href="${mapsUrl}" target="_blank" class="btn-route-wide">
+            <i class="fa-solid fa-diamond-turn-right"></i>
+            <span>Petunjuk Rute (Google Maps)</span>
+          </a>
         </div>
 
-        <!-- Tab Contents -->
-        <!-- 1. Overview Tab -->
-        <div class="tab-content active" id="tab-overview">
-          <!-- Action Button Row -->
-          <div class="detail-action-row">
-            <a href="${mapsUrl}" target="_blank" class="btn-route-wide">
-              <i class="fa-solid fa-diamond-turn-right"></i>
-              <span>Petunjuk Rute (Google Maps)</span>
-            </a>
-          </div>
+        <!-- Description -->
+        <p class="detail-desc">${location.description}</p>
 
-          <!-- Description -->
-          <p class="detail-desc">${location.description}</p>
-
-          <!-- Info List -->
-          <div class="detail-info-list">
-            <div class="info-item">
-              <i class="fa-solid fa-map-pin"></i>
-              <div>
-                <span class="info-item-label">Alamat</span>
-                <span class="info-item-value">${location.address}</span>
-              </div>
-            </div>
-            ${hoursHtml}
-            <div class="info-item">
-              <i class="fa-solid fa-phone"></i>
-              <div>
-                <span class="info-item-label">Kontak</span>
-                <span class="info-item-value">${location.contact}</span>
-              </div>
-            </div>
-            <div class="info-item">
-              <i class="fa-solid fa-compass"></i>
-              <div>
-                <span class="info-item-label">Koordinat</span>
-                <span class="info-item-value">${location.latitude.toFixed(6)}, ${location.longitude.toFixed(6)}</span>
-              </div>
+        <!-- Info List -->
+        <div class="detail-info-list">
+          <div class="info-item">
+            <i class="fa-solid fa-map-pin"></i>
+            <div>
+              <span class="info-item-label">Alamat</span>
+              <span class="info-item-value">${location.address}</span>
             </div>
           </div>
-        </div>
-
-        <!-- 3. About Tab -->
-        <div class="tab-content" id="tab-about">
-          <p class="detail-desc">
-            <strong>${location.name}</strong> merupakan salah satu fasilitas ${location.category.toLowerCase()} penting yang berlokasi di Kelurahan Andongsili, Kecamatan Mojotengah, Kabupaten Wonosobo, Jawa Tengah.
-          </p>
-          <p class="detail-desc" style="margin-top: 0.5rem;">
-            Fasilitas ini berperan penting dalam menunjang kehidupan dan kesejahteraan masyarakat di Andongsili serta mendukung pembangunan daerah yang berkelanjutan.
-          </p>
+          ${hoursHtml}
+          <div class="info-item">
+            <i class="fa-solid fa-phone"></i>
+            <div>
+              <span class="info-item-label">Kontak</span>
+              <span class="info-item-value">${location.contact}</span>
+            </div>
+          </div>
+          <div class="info-item">
+            <i class="fa-solid fa-compass"></i>
+            <div>
+              <span class="info-item-label">Koordinat</span>
+              <span class="info-item-value">${location.latitude.toFixed(6)}, ${location.longitude.toFixed(6)}</span>
+            </div>
+          </div>
         </div>
       </div>
     `;
-
-    // Attach Tab Event Listeners
-    const tabBtns = drawerBody.querySelectorAll(".tab-btn");
-    const tabContents = drawerBody.querySelectorAll(".tab-content");
-
-    tabBtns.forEach(btn => {
-      btn.addEventListener("click", () => {
-        const targetTab = btn.getAttribute("data-tab");
-
-        tabBtns.forEach(b => b.classList.remove("active"));
-        tabContents.forEach(c => c.classList.remove("active"));
-
-        btn.classList.add("active");
-        drawerBody.querySelector(`#tab-${targetTab}`).classList.add("active");
-      });
-    });
     
     // Sync Search Input with location name
     searchInput.value = location.name;

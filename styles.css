@@ -708,11 +708,11 @@ body.dark-mode .control-btn.active {
 /* ================= SLIDING DETAIL DRAWER (DESKTOP) ================= */
 .detail-drawer {
   position: absolute;
-  top: 20px;
+  top: 80px; /* Changed from 20px to 80px to prevent overlap with search bar */
   left: 20px;
   right: auto;
   width: 380px;
-  height: calc(100% - 40px);
+  height: calc(100% - 100px); /* Adjusted height to fit bottom margin of 20px */
   border-radius: 20px;
   padding: 0;
   display: flex;
@@ -1432,7 +1432,11 @@ body.dark-mode .btn-route-wide {
   }
 
   .detail-drawer.peeking {
-    transform: translateY(calc(100% - 240px));
+    transform: translateY(calc(100% - 280px));
+  }
+
+  .drawer-banner {
+    height: 130px;
   }
 
   .detail-drawer.expanded {
