@@ -13,15 +13,16 @@ document.addEventListener("DOMContentLoaded", () => {
     document.body.classList.remove("hero-active");
     document.body.classList.add("map-active");
     
-    // Invalidate Leaflet map size setelah transisi CSS selesai agar render ubin peta rapi
+    // Invalidate Leaflet map size almost immediately (50ms delay) and trigger the zoom fly-in.
+    // This allows the map zoom-in animation to occur concurrently with the hero section sliding up,
+    // reducing total transition wait time significantly.
     setTimeout(() => {
       map.invalidateSize();
-      // Smoothly fly into the map coordinates with zoom-in effect
       map.flyTo(MAP_CONFIG.center, MAP_CONFIG.zoom, {
-        duration: 1.5,
+        duration: 1.0,
         easeLinearity: 0.25
       });
-    }, 800);
+    }, 50);
   });
 
   btnBackToHero.addEventListener("click", () => {
@@ -39,10 +40,10 @@ document.addEventListener("DOMContentLoaded", () => {
       document.body.classList.remove("map-active");
       document.body.classList.add("hero-active");
       
-      // Reset map zoom level after the transition finishes so it's ready for the next entrance fly-in
+      // Reset map zoom level instantly behind the scenes so it's ready for the next entrance
       setTimeout(() => {
         map.setView(MAP_CONFIG.center, MAP_CONFIG.zoom - 1.5, { animate: false });
-      }, 800);
+      }, 50);
     }
   });
 
