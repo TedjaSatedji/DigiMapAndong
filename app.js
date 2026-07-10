@@ -20,9 +20,20 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   btnBackToHero.addEventListener("click", () => {
-    document.body.classList.remove("map-active");
-    document.body.classList.add("hero-active");
-    closeDrawer();
+    const isMobile = window.innerWidth <= 768;
+    const isDrawerOpen = isMobile 
+      ? (detailDrawer.classList.contains("peeking") || detailDrawer.classList.contains("expanded"))
+      : detailDrawer.classList.contains("active");
+
+    if (isDrawerOpen) {
+      closeDrawer();
+      searchInput.value = "";
+      btnClearSearch.classList.remove("active");
+      filterLocations();
+    } else {
+      document.body.classList.remove("map-active");
+      document.body.classList.add("hero-active");
+    }
   });
 
   // ================= 3. INISIALISASI PETA LEAFLET =================
@@ -263,10 +274,9 @@ document.addEventListener("DOMContentLoaded", () => {
         offsetY = offsetPixels;
       }
     } else {
-      // Desktop Layout: floating search bar on the left (approx 380px), detailDrawer on the right
-      const sidebarWidth = 380;
+      // Desktop Layout: detailDrawer is on the left (width 380px, left margin 20px)
       const drawerWidth = detailDrawer.classList.contains("active") ? detailDrawer.offsetWidth : 0;
-      offsetX = (drawerWidth - sidebarWidth) / 2;
+      offsetX = drawerWidth > 0 ? - (drawerWidth + 20) / 2 : 0;
     }
 
     targetPoint.x += offsetX;
@@ -279,59 +289,114 @@ document.addEventListener("DOMContentLoaded", () => {
   function showLocationDetails(location, leafletMarker) {
     const meta = CATEGORY_META[location.category] || DEFAULT_META;
     
-      const mapsUrl = location.googleMapsUrl || 
-        (location.name ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(location.name + ', Andongsili, Wonosobo')}` 
-                       : `https://www.google.com/maps/search/?api=1&query=${location.latitude},${location.longitude}`);
+    const hoursHtml = (location.hours && location.hours !== "-") ? `
+      <div class="info-item">
+        <i class="fa-solid fa-clock"></i>
+        <div>
+          <span class="info-item-label">Jam Operasional</span>
+          <span class="info-item-value">${location.hours}</span>
+        </div>
+      </div>
+    ` : "";
+    
+    const mapsUrl = location.googleMapsUrl || 
+      (location.name ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(location.name + ', Andongsili, Wonosobo')}` 
+                     : `https://www.google.com/maps/search/?api=1&query=${location.latitude},${location.longitude}`);
 
-      drawerBody.innerHTML = `
-      <div class="detail-header-block">
-        <div class="header-text-container">
+    // Populate drawer body
+    drawerBody.innerHTML = `
+      <!-- Banner Image -->
+      <div class="drawer-banner" style="background-image: url('${location.image}');"></div>
+
+      <div class="drawer-content-padding">
+        <!-- Header Info -->
+        <div class="drawer-header-info">
+          <h2 class="detail-title">${location.name}</h2>
+          
           <span class="detail-category-badge" style="background-color: ${meta.color}25; color: ${meta.color};">
             <i class="fa-solid ${meta.icon}"></i> ${location.category}
           </span>
-          <h2 class="detail-title">${location.name}</h2>
         </div>
-        <div class="header-thumbnail" style="background-image: url('${location.image}');"></div>
-      </div>
-      
-      <div class="detail-actions">
-        <a href="${mapsUrl}" 
-           target="_blank" 
-           class="btn btn-primary btn-route">
-          <i class="fa-solid fa-route"></i>
-          <span>Petunjuk Arah (Google Maps)</span>
-        </a>
-      </div>
 
-      <div class="detail-image" style="background-image: url('${location.image}');"></div>
-      
-      <p class="detail-desc">${location.description}</p>
-      
-      <div class="detail-info-list">
-        <div class="info-item">
-          <i class="fa-solid fa-map-pin"></i>
-          <div>
-            <span class="info-item-label">Alamat</span>
-            <span class="info-item-value">${location.address}</span>
+        <!-- Tabs Navigation -->
+        <div class="detail-tabs">
+          <button class="tab-btn active" data-tab="overview">Ringkasan</button>
+          <button class="tab-btn" data-tab="about">Tentang</button>
+        </div>
+
+        <!-- Tab Contents -->
+        <!-- 1. Overview Tab -->
+        <div class="tab-content active" id="tab-overview">
+          <!-- Action Button Row -->
+          <div class="detail-action-row">
+            <a href="${mapsUrl}" target="_blank" class="btn-route-wide">
+              <i class="fa-solid fa-diamond-turn-right"></i>
+              <span>Petunjuk Rute (Google Maps)</span>
+            </a>
+          </div>
+
+          <!-- Description -->
+          <p class="detail-desc">${location.description}</p>
+
+          <!-- Info List -->
+          <div class="detail-info-list">
+            <div class="info-item">
+              <i class="fa-solid fa-map-pin"></i>
+              <div>
+                <span class="info-item-label">Alamat</span>
+                <span class="info-item-value">${location.address}</span>
+              </div>
+            </div>
+            ${hoursHtml}
+            <div class="info-item">
+              <i class="fa-solid fa-phone"></i>
+              <div>
+                <span class="info-item-label">Kontak</span>
+                <span class="info-item-value">${location.contact}</span>
+              </div>
+            </div>
+            <div class="info-item">
+              <i class="fa-solid fa-compass"></i>
+              <div>
+                <span class="info-item-label">Koordinat</span>
+                <span class="info-item-value">${location.latitude.toFixed(6)}, ${location.longitude.toFixed(6)}</span>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="info-item">
-          <i class="fa-solid fa-phone"></i>
-          <div>
-            <span class="info-item-label">Kontak</span>
-            <span class="info-item-value">${location.contact}</span>
-          </div>
-        </div>
-        <div class="info-item">
-          <i class="fa-solid fa-compass"></i>
-          <div>
-            <span class="info-item-label">Koordinat</span>
-            <span class="info-item-value">${location.latitude.toFixed(6)}, ${location.longitude.toFixed(6)}</span>
-          </div>
+
+        <!-- 3. About Tab -->
+        <div class="tab-content" id="tab-about">
+          <p class="detail-desc">
+            <strong>${location.name}</strong> merupakan salah satu fasilitas ${location.category.toLowerCase()} penting yang berlokasi di Kelurahan Andongsili, Kecamatan Mojotengah, Kabupaten Wonosobo, Jawa Tengah.
+          </p>
+          <p class="detail-desc" style="margin-top: 0.5rem;">
+            Fasilitas ini berperan penting dalam menunjang kehidupan dan kesejahteraan masyarakat di Andongsili serta mendukung pembangunan daerah yang berkelanjutan.
+          </p>
         </div>
       </div>
     `;
+
+    // Attach Tab Event Listeners
+    const tabBtns = drawerBody.querySelectorAll(".tab-btn");
+    const tabContents = drawerBody.querySelectorAll(".tab-content");
+
+    tabBtns.forEach(btn => {
+      btn.addEventListener("click", () => {
+        const targetTab = btn.getAttribute("data-tab");
+
+        tabBtns.forEach(b => b.classList.remove("active"));
+        tabContents.forEach(c => c.classList.remove("active"));
+
+        btn.classList.add("active");
+        drawerBody.querySelector(`#tab-${targetTab}`).classList.add("active");
+      });
+    });
     
+    // Sync Search Input with location name
+    searchInput.value = location.name;
+    btnClearSearch.classList.add("active");
+
     if (window.innerWidth <= 768) {
       detailDrawer.classList.remove("closed", "expanded");
       detailDrawer.classList.add("peeking");
@@ -375,6 +440,13 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     if (activeSelectedMarker) {
+      const currentActiveData = markersList.find(m => m.leafletMarker === activeSelectedMarker);
+      if (currentActiveData && searchInput.value === currentActiveData.data.name) {
+        searchInput.value = "";
+        btnClearSearch.classList.remove("active");
+        filterLocations();
+      }
+
       const el = activeSelectedMarker.getElement();
       if (el) el.classList.remove("active");
       activeSelectedMarker = null;
@@ -403,6 +475,7 @@ document.addEventListener("DOMContentLoaded", () => {
     searchInput.value = "";
     btnClearSearch.classList.remove("active");
     filterLocations();
+    closeDrawer();
   });
 
   // ================= 8. SISTEM FILTER KATEGORI =================
