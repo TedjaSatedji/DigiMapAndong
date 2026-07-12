@@ -2,147 +2,149 @@
 // Sumber data statis terstruktur untuk Web GIS Portal Kelurahan Andongsili
 
 const KELURAHAN_PROFILE = {
-  name: "Kelurahan Andongsili",
-  district: "Kecamatan Mojotengah",
-  regency: "Kabupaten Wonosobo",
-  province: "Jawa Tengah",
-  postalCode: "56351",
-  address: "Jl. Dieng Km. 4, Mojotengah, Wonosobo, Jawa Tengah",
-  email: "andongsili.mojotengah@gmail.com",
-  phone: "(0286) 321888",
-  description: "Kelurahan Andongsili merupakan salah satu kelurahan strategis di Kecamatan Mojotengah, Kabupaten Wonosobo, Jawa Tengah. Wilayah ini berfungsi sebagai pusat hunian, perdagangan lokal, serta area strategis pendidikan yang berbatasan langsung dengan kompleks akademik Universitas Sains Al-Qur'an (UNSIQ). Dikelilingi pemandangan alam perbukitan dan iklim pegunungan yang sejuk, Andongsili terus berkembang sebagai wilayah penyangga ekonomi perkotaan Wonosobo.",
-  history: "Kelurahan Andongsili memiliki sejarah panjang sebagai kawasan pemukiman agraris yang subur di lereng Gunung Dieng. Seiring waktu, dengan dibangunnya akses Jalan Lingkar Utara Wonosobo dan berdirinya Kampus UNSIQ, wilayah Andongsili bertransformasi menjadi area semi-perkotaan yang dinamis. Meskipun demikian, nilai-nilai gotong royong dan kelestarian alam pedesaan tetap dijunjung tinggi oleh seluruh lapisan masyarakat di kelurahan ini.",
-  heroImage: "assets/photos/landscape.webp"
+  "name": "Kelurahan Andongsili",
+  "district": "Kecamatan Mojotengah",
+  "regency": "Kabupaten Wonosobo",
+  "province": "Jawa Tengah",
+  "postalCode": "56351",
+  "address": "Jl. Dieng Km. 4, Mojotengah, Wonosobo, Jawa Tengah",
+  "email": "andongsili.mojotengah@gmail.com",
+  "phone": "(0286) 321888",
+  "description": "Kelurahan Andongsili merupakan salah satu kelurahan strategis di Kecamatan Mojotengah, Kabupaten Wonosobo, Jawa Tengah. Wilayah ini berfungsi sebagai pusat hunian, perdagangan lokal, serta area strategis pendidikan yang berbatasan langsung dengan kompleks akademik Universitas Sains Al-Qur'an (UNSIQ). Dikelilingi pemandangan alam perbukitan dan iklim pegunungan yang sejuk, Andongsili terus berkembang sebagai wilayah penyangga ekonomi perkotaan Wonosobo.",
+  "history": "Kelurahan Andongsili memiliki sejarah panjang sebagai kawasan pemukiman agraris yang subur di lereng Gunung Dieng. Seiring waktu, dengan dibangunnya akses Jalan Lingkar Utara Wonosobo dan berdirinya Kampus UNSIQ, wilayah Andongsili bertransformasi menjadi area semi-perkotaan yang dinamis. Meskipun demikian, nilai-nilai gotong royong dan kelestarian alam pedesaan tetap dijunjung tinggi oleh seluruh lapisan masyarakat di kelurahan ini.",
+  "heroImage": ""
 };
 
 const KELURAHAN_STATS = {
-  population: "3.488",
-  families: "1.240",
-  rwCount: "7",
-  rtCount: "27",
-  areaSize: "2.63"
+  "population": "3.488",
+  "families": "1.240",
+  "rwCount": "7",
+  "rtCount": "27",
+  "areaSize": "2.63"
 };
 
 const MAP_CONFIG = {
-  center: [-7.3262893, 109.9233481],
-  zoom: 15
+  "center": [
+    -7.3262893,
+    109.9233481
+  ],
+  "zoom": 15
 };
 
 const LOCATIONS = [
   {
-    id: 1,
-    name: "Kantor Kelurahan Andongsili",
-    category: "Pemerintahan",
-    latitude: -7.326277,
-    longitude: 109.921981,
-    description: "Kantor Kelurahan Andongsili merupakan pusat pelayanan administrasi dan pemerintahan tingkat kelurahan di Kecamatan Mojotengah. Fasilitas ini menyediakan berbagai layanan kependudukan, perizinan lokal, serta koordinasi pembangunan wilayah bagi masyarakat setempat.",
-    address: "Alamat.",
-    image: "assets/photos/kelurahan/KantorKelurahan.webp",
-    contact: "-",
-    hours: "Senin - Kamis: 08.00 - 15.00, Jumat: 08.00 - 11.00, Sabtu - Minggu: Tutup"
+    "id": 1,
+    "name": "Kantor Kelurahan Andongsili",
+    "category": "Pemerintahan",
+    "latitude": -7.326277,
+    "longitude": 109.921981,
+    "description": "Kantor Kelurahan Andongsili merupakan pusat pelayanan administrasi dan pemerintahan tingkat kelurahan di Kecamatan Mojotengah. Fasilitas ini menyediakan berbagai layanan kependudukan, perizinan lokal, serta koordinasi pembangunan wilayah bagi masyarakat setempat.",
+    "address": "Andongsili, Mojotengah, Rw. 4, Andongsili, Kec. Wonosobo, Kabupaten Wonosobo, Jawa Tengah 56351",
+    "image": "assets/photos/kelurahan/KantorKelurahan.webp",
+    "contact": "-",
+    "hours": "Senin - Kamis: 08.00 - 15.00, Jumat: 08.00 - 11.00, Sabtu - Minggu: Tutup"
   },
   {
-    id: 2,
-    name: "PMI Kabupaten Wonosobo",
-    category: "Kesehatan",
-    latitude: -7.326974,
-    longitude: 109.916962,
-    description: "Markas Palang Merah Indonesia (PMI) Kabupaten Wonosobo yang melayani pelayanan donor darah, bank darah, pertolongan pertama pada kecelakaan (P3K), kesiapsiagaan bencana, serta penyediaan armada ambulans darurat.",
-    address: "Alamat.",
-    image: "https://images.unsplash.com/photo-1541829019-2188201b83a0?auto=format&fit=crop&w=600&q=80",
-    contact: "-"
+    "id": 2,
+    "name": "PMI Kabupaten Wonosobo",
+    "category": "Kesehatan",
+    "latitude": -7.326974,
+    "longitude": 109.916962,
+    "description": "Markas Palang Merah Indonesia (PMI) Kabupaten Wonosobo yang melayani pelayanan donor darah, bank darah, pertolongan pertama pada kecelakaan (P3K), kesiapsiagaan bencana, serta penyediaan armada ambulans darurat.",
+    "address": "Jalan Soepardjo Rustam, Rw. 6, Andongsili, Kec. Mojotengah, Kabupaten Wonosobo, Jawa Tengah 56351",
+    "image": "assets/photos/kelurahan/pmi.webp",
+    "contact": "0286323354"
   },
   {
-    id: 3,
-    name: "Masjid Al-Istiqomah",
-    category: "Tempat Ibadah",
-    latitude: -7.325999,
-    longitude: 109.922769,
-    description: "Masjid Al-Istiqomah merupakan masjid jami' di Kelurahan Andongsili yang aktif menyelenggarakan shalat berjamaah lima waktu, shalat Jumat, serta pengajian rutin warga. Masjid ini juga menjadi pusat kegiatan keagamaan dan pembinaan mental spiritual umat.",
-    address: "Alamat.",
-    image: "https://images.unsplash.com/photo-1541829019-2188201b83a0?auto=format&fit=crop&w=600&q=80",
-    contact: "-"
+    "id": 3,
+    "name": "Masjid Al-Istiqomah",
+    "category": "Tempat Ibadah",
+    "latitude": -7.325999,
+    "longitude": 109.922769,
+    "description": "Masjid Al-Istiqomah merupakan masjid jami' di Kelurahan Andongsili yang aktif menyelenggarakan shalat berjamaah lima waktu, shalat Jumat, serta pengajian rutin warga. Masjid ini juga menjadi pusat kegiatan keagamaan dan pembinaan mental spiritual umat.",
+    "address": "Andongsili Baru, Mojo Tengah, Rw. 4, Andongsili, Kec. Wonosobo, Kabupaten Wonosobo, Jawa Tengah 56351",
+    "image": "assets/photos/kelurahan/istiqomah.webp",
+    "contact": "-"
   },
   {
-    id: 4,
-    name: "SDN Andongsili",
-    category: "Pendidikan",
-    latitude: -7.324837,
-    longitude: 109.921961,
-    description: "Sekolah Dasar Negeri Andongsili merupakan lembaga pendidikan dasar negeri formal di Kelurahan Andongsili yang berkomitmen mencetak generasi cerdas, berkarakter mulia, serta aktif dalam kegiatan akademis maupun ekstrakurikuler.",
-    address: "Alamat.",
-    image: "https://images.unsplash.com/photo-1541829019-2188201b83a0?auto=format&fit=crop&w=600&q=80",
-    contact: "-"
+    "id": 4,
+    "name": "SDN Andongsili",
+    "category": "Pendidikan",
+    "latitude": -7.324837,
+    "longitude": 109.921961,
+    "description": "Sekolah Dasar Negeri Andongsili merupakan lembaga pendidikan dasar negeri formal di Kelurahan Andongsili yang berkomitmen mencetak generasi cerdas, berkarakter mulia, serta aktif dalam kegiatan akademis maupun ekstrakurikuler.",
+    "address": "MWGC+3PJ, Rw. 7, Andongsili, Kec. Mojotengah, Kabupaten Wonosobo, Jawa Tengah 56351",
+    "image": "assets/photos/kelurahan/sdn.webp",
+    "contact": "-"
   },
   {
-    id: 5,
-    name: "UNSIQ",
-    category: "Pendidikan",
-    latitude: -7.326638,
-    longitude: 109.912848,
-    description: "Kampus II Universitas Sains Al-Qur'an (UNSIQ) Jawa Tengah di Wonosobo, sebuah perguruan tinggi swasta terkemuka yang memadukan pendidikan sains modern dengan pengkajian dan implementasi nilai-nilai luhur Al-Qur'an.",
-    address: "Alamat.",
-    image: "https://images.unsplash.com/photo-1541829019-2188201b83a0?auto=format&fit=crop&w=600&q=80",
-    contact: "-"
+    "id": 5,
+    "name": "UNSIQ",
+    "category": "Pendidikan",
+    "latitude": -7.326638,
+    "longitude": 109.912848,
+    "description": "Kampus II Universitas Sains Al-Qur'an (UNSIQ) Jawa Tengah di Wonosobo, sebuah perguruan tinggi swasta terkemuka yang memadukan pendidikan sains modern dengan pengkajian dan implementasi nilai-nilai luhur Al-Qur'an.",
+    "address": "Rw. 7, Andongsili, Kec. Mojotengah, Kabupaten Wonosobo, Jawa Tengah 56351",
+    "image": "assets/photos/kelurahan/unsiq.webp",
+    "contact": "-"
   },
   {
-    id: 6,
-    name: "Mushola Nurrus Sulaiman",
-    category: "Tempat Ibadah",
-    latitude: -7.325269,
-    longitude: 109.922223,
-    description: "Mushola lingkungan di Kelurahan Andongsili yang diperuntukkan bagi warga sekitar dalam melaksanakan ibadah shalat berjamaah lima waktu, belajar membaca Al-Qur'an (TPA) bagi anak-anak, serta musyawarah keagamaan warga.",
-    address: "Alamat.",
-    image: "https://images.unsplash.com/photo-1541829019-2188201b83a0?auto=format&fit=crop&w=600&q=80",
-    contact: "-"
+    "id": 6,
+    "name": "Mushola Nurrus Sulaiman",
+    "category": "Tempat Ibadah",
+    "latitude": -7.325269,
+    "longitude": 109.922223,
+    "description": "Mushola lingkungan di Kelurahan Andongsili yang diperuntukkan bagi warga sekitar dalam melaksanakan ibadah shalat berjamaah lima waktu, belajar membaca Al-Qur'an (TPA) bagi anak-anak, serta musyawarah keagamaan warga.",
+    "address": "Jl. Soeparjo Roestam, RT.07/RW.02, Rw. 4, Andongsili, Kec. Mojotengah, Kabupaten Wonosobo, Jawa Tengah 56351",
+    "image": "assets/photos/kelurahan/musholanurrus.webp",
+    "contact": "-"
   },
   {
-    id: 7,
-    name: "Dinas Perhubungan",
-    category: "Pemerintahan",
-    latitude: -7.327379,
-    longitude: 109.915378,
-    description: "Kantor Dinas Perumahan, Kawasan Permukiman, dan Perhubungan Kabupaten Wonosobo yang bertugas dalam pengaturan transportasi darat, tata kelola lalu lintas, serta penyediaan fasilitas keselamatan jalan umum.",
-    address: "Alamat.",
-    image: "https://images.unsplash.com/photo-1541829019-2188201b83a0?auto=format&fit=crop&w=600&q=80",
-    contact: "-"
+    "id": 7,
+    "name": "Dinas Perhubungan",
+    "category": "Pemerintahan",
+    "latitude": -7.327379,
+    "longitude": 109.915378,
+    "description": "Kantor Dinas Perumahan, Kawasan Permukiman, dan Perhubungan Kabupaten Wonosobo yang bertugas dalam pengaturan transportasi darat, tata kelola lalu lintas, serta penyediaan fasilitas keselamatan jalan umum.",
+    "address": "Jl. Soeparjo Roestam No.9a, Rw. 6, Andongsili, Kec. Mojotengah, Kabupaten Wonosobo, Jawa Tengah 56351",
+    "image": "assets/photos/kelurahan/dishub.webp",
+    "contact": "-"
   },
   {
-    id: 8,
-    name: "Amaliyah Salaman Mosque",
-    category: "Tempat Ibadah",
-    latitude: -7.314744,
-    longitude: 109.940185,
-    description: "Masjid jami' yang berlokasi di Dusun Salaman, berfungsi sebagai tempat ibadah shalat lima waktu, shalat Jumat berjamaah, pengajian umum berkala, serta program pembinaan akhlak anak-anak di lingkungan setempat.",
-    address: "Alamat.",
-    image: "https://images.unsplash.com/photo-1541829019-2188201b83a0?auto=format&fit=crop&w=600&q=80",
-    contact: "-"
+    "id": 8,
+    "name": "Amaliyah Salaman Mosque",
+    "category": "Tempat Ibadah",
+    "latitude": -7.314744,
+    "longitude": 109.940185,
+    "description": "Masjid jami' yang berlokasi di Dusun Salaman, berfungsi sebagai tempat ibadah shalat lima waktu, shalat Jumat berjamaah, pengajian umum berkala, serta program pembinaan akhlak anak-anak di lingkungan setempat.",
+    "address": "Alamat.",
+    "image": "https://images.unsplash.com/photo-1541829019-2188201b83a0?auto=format&fit=crop&w=600&q=80",
+    "contact": "-"
   },
   {
-    id: 9,
-    name: "Masjid Nurul Huda. Dusun Panggrungan",
-    category: "Tempat Ibadah",
-    latitude: -7.319531,
-    longitude: 109.935105,
-    description: "Masjid Dusun Panggrungan yang merupakan sentra peribadatan dan pusat keagamaan bagi warga setempat di Dusun Panggrungan, Kelurahan Andongsili, dilengkapi dengan program majelis taklim dan pengajaran Al-Qur'an.",
-    address: "Alamat.",
-    image: "https://images.unsplash.com/photo-1541829019-2188201b83a0?auto=format&fit=crop&w=600&q=80",
-    contact: "-",
-    googleMapsUrl: "https://maps.app.goo.gl/zugn1RDEs9qvDweY8"
+    "id": 9,
+    "name": "Masjid Nurul Huda. Dusun Panggrungan",
+    "category": "Tempat Ibadah",
+    "latitude": -7.319531,
+    "longitude": 109.935105,
+    "description": "Masjid Dusun Panggrungan yang merupakan sentra peribadatan dan pusat keagamaan bagi warga setempat di Dusun Panggrungan, Kelurahan Andongsili, dilengkapi dengan program majelis taklim dan pengajaran Al-Qur'an.",
+    "address": "Sumberan Barat, West Wonosobo, Wonosobo, Wonosobo Regency, Central Java",
+    "image": "assets/photos/kelurahan/nurulhuda.webp",
+    "contact": "-",
+    "googleMapsUrl": "https://maps.app.goo.gl/zugn1RDEs9qvDweY8"
   },
   {
-    id: 10,
-    name: "Masjid Haji Kosim Kusmana",
-    category: "Tempat Ibadah",
-    latitude: -7.321526,
-    longitude: 109.926436,
-    description: "Masjid yang didirikan atas prakarsa dan wakaf keluarga Haji Kosim Kusmana. Masjid ini memfasilitasi ibadah sehari-hari warga sekitar, pengajian rutin, serta berbagai program pembinaan sosial keagamaan kemasyarakatan.",
-    address: "Alamat.",
-    image: "https://images.unsplash.com/photo-1541829019-2188201b83a0?auto=format&fit=crop&w=600&q=80",
-    contact: "-"
+    "id": 10,
+    "name": "Masjid Haji Kosim Kusmana",
+    "category": "Tempat Ibadah",
+    "latitude": -7.321526,
+    "longitude": 109.926436,
+    "description": "Masjid yang didirikan atas prakarsa dan wakaf keluarga Haji Kosim Kusmana. Masjid ini memfasilitasi ibadah sehari-hari warga sekitar, pengajian rutin, serta berbagai program pembinaan sosial keagamaan kemasyarakatan.",
+    "address": "MWHG+9HM, Rw. 4, Andongsili, Kec. Wonosobo, Kabupaten Wonosobo, Jawa Tengah 56351",
+    "image": "assets/photos/kelurahan/hsimkusmana.webp",
+    "contact": "-"
   }
 ];
-
 
 const KELURAHAN_BOUNDARY = {
   "type": "FeatureCollection",
@@ -966,7 +968,7 @@ const KELURAHAN_BOUNDARY = {
         "REMARK": "Wilayah Administrasi Keluruhan/Desa",
         "KDPBPS": "",
         "FCODE": "",
-        "LUASWH": 0.0,
+        "LUASWH": 0,
         "UUPP": "",
         "SRS_ID": "",
         "LCODE": "BA0020",

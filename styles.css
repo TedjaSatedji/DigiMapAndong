@@ -796,7 +796,7 @@ body.dark-mode .control-btn.active {
 /* --- Premium Google Maps Layout inside Drawer --- */
 .drawer-banner {
   width: 100%;
-  height: 200px;
+  height: 250px;
   background-size: cover;
   background-position: center;
   position: relative;
@@ -1516,7 +1516,7 @@ body.dark-mode .btn-route-wide {
   }
 
   .drawer-banner {
-    height: 130px;
+    height: 180px;
   }
 
   .detail-drawer.expanded {
