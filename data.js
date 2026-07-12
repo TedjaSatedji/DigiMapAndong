@@ -12,7 +12,7 @@ const KELURAHAN_PROFILE = {
   "phone": "(0286) 321888",
   "description": "Kelurahan Andongsili merupakan salah satu kelurahan strategis di Kecamatan Mojotengah, Kabupaten Wonosobo, Jawa Tengah. Wilayah ini berfungsi sebagai pusat hunian, perdagangan lokal, serta area strategis pendidikan yang berbatasan langsung dengan kompleks akademik Universitas Sains Al-Qur'an (UNSIQ). Dikelilingi pemandangan alam perbukitan dan iklim pegunungan yang sejuk, Andongsili terus berkembang sebagai wilayah penyangga ekonomi perkotaan Wonosobo.",
   "history": "Kelurahan Andongsili memiliki sejarah panjang sebagai kawasan pemukiman agraris yang subur di lereng Gunung Dieng. Seiring waktu, dengan dibangunnya akses Jalan Lingkar Utara Wonosobo dan berdirinya Kampus UNSIQ, wilayah Andongsili bertransformasi menjadi area semi-perkotaan yang dinamis. Meskipun demikian, nilai-nilai gotong royong dan kelestarian alam pedesaan tetap dijunjung tinggi oleh seluruh lapisan masyarakat di kelurahan ini.",
-  "heroImage": ""
+  "heroImage": "assets/photos/landscape.webp"
 };
 
 const KELURAHAN_STATS = {
@@ -117,21 +117,20 @@ const LOCATIONS = [
     "latitude": -7.314744,
     "longitude": 109.940185,
     "description": "Masjid jami' yang berlokasi di Dusun Salaman, berfungsi sebagai tempat ibadah shalat lima waktu, shalat Jumat berjamaah, pengajian umum berkala, serta program pembinaan akhlak anak-anak di lingkungan setempat.",
-    "address": "Alamat.",
-    "image": "https://images.unsplash.com/photo-1541829019-2188201b83a0?auto=format&fit=crop&w=600&q=80",
+    "address": "Salaman, Lengkong, Kec. Garung, Kabupaten Wonosobo, Jawa Tengah 56351",
+    "image": "assets/photos/kelurahan/alamiyah.webp",
     "contact": "-"
   },
   {
     "id": 9,
-    "name": "Masjid Nurul Huda. Dusun Panggrungan",
+    "name": "Masjid Baitul Iman",
     "category": "Tempat Ibadah",
-    "latitude": -7.319531,
-    "longitude": 109.935105,
+    "latitude": -7.320582,
+    "longitude": 109.935806,
     "description": "Masjid Dusun Panggrungan yang merupakan sentra peribadatan dan pusat keagamaan bagi warga setempat di Dusun Panggrungan, Kelurahan Andongsili, dilengkapi dengan program majelis taklim dan pengajaran Al-Qur'an.",
-    "address": "Sumberan Barat, West Wonosobo, Wonosobo, Wonosobo Regency, Central Java",
-    "image": "assets/photos/kelurahan/nurulhuda.webp",
-    "contact": "-",
-    "googleMapsUrl": "https://maps.app.goo.gl/zugn1RDEs9qvDweY8"
+    "address": "Masjid Baitul Iman, Panggrungan, RT.01/RW.05, Rw. 5, Andongsili, Kec. Mojotengah, Kabupaten Wonosobo, Jawa Tengah 56351",
+    "image": "assets/photos/kelurahan/baituliman.webp",
+    "contact": "-"
   },
   {
     "id": 10,
@@ -142,6 +141,17 @@ const LOCATIONS = [
     "description": "Masjid yang didirikan atas prakarsa dan wakaf keluarga Haji Kosim Kusmana. Masjid ini memfasilitasi ibadah sehari-hari warga sekitar, pengajian rutin, serta berbagai program pembinaan sosial keagamaan kemasyarakatan.",
     "address": "MWHG+9HM, Rw. 4, Andongsili, Kec. Wonosobo, Kabupaten Wonosobo, Jawa Tengah 56351",
     "image": "assets/photos/kelurahan/hsimkusmana.webp",
+    "contact": "-"
+  },
+  {
+    "id": 11,
+    "name": "RA Masyitoh Andongsili",
+    "category": "Pendidikan",
+    "latitude": -7.326978,
+    "longitude": 109.922928,
+    "description": "Salah satu lembaga pendidikan anak usia dini yang tersedia di Andongsili, menjadi tempat bagi anak-anak untuk belajar, bermain, dan mengembangkan kemampuan sejak tahap awal pendidikan.",
+    "address": "Jl. Lkr. Utara, Rw. 6, Andongsili, Kec. Mojotengah, Kabupaten Wonosobo, Jawa Tengah 56351",
+    "image": "assets/photos/kelurahan/ramasyito.webp",
     "contact": "-"
   }
 ];

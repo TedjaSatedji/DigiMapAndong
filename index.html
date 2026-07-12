@@ -25,6 +25,11 @@
 </head>
 
 <body class="hero-active">
+  <script>
+    if (new URLSearchParams(window.location.search).has('map')) {
+      document.body.className = "map-active";
+    }
+  </script>
 
   <!-- ================= HERO SECTION (LANDING VIEW) ================= -->
   <header class="hero-section">

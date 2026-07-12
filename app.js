@@ -9,6 +9,15 @@ document.addEventListener("DOMContentLoaded", () => {
   const btnExplore = document.getElementById("btnExplore");
   const btnBackToHero = document.getElementById("btnBackToHero");
 
+  // Check if ?map is in URL query parameters to bypass hero page
+  const urlParams = new URLSearchParams(window.location.search);
+  const showMapDirectly = urlParams.has('map');
+
+  if (showMapDirectly) {
+    document.body.classList.remove("hero-active");
+    document.body.classList.add("map-active");
+  }
+
   btnExplore.addEventListener("click", () => {
     document.body.classList.remove("hero-active");
     document.body.classList.add("map-active");
@@ -52,6 +61,16 @@ document.addEventListener("DOMContentLoaded", () => {
     zoomControl: false, // Kita pasang zoom control custom di sisi kanan nanti
     renderer: L.svg({ padding: 2.0 }) // Pre-render vectors far outside viewport to avoid zoom clipping
   }).setView(MAP_CONFIG.center, MAP_CONFIG.zoom - 1.5);
+
+  if (showMapDirectly) {
+    setTimeout(() => {
+      map.invalidateSize();
+      map.flyTo(MAP_CONFIG.center, MAP_CONFIG.zoom, {
+        duration: 1.2,
+        easeLinearity: 0.25
+      });
+    }, 150);
+  }
 
   // Tambahkan zoom control di sudut kanan bawah agar tidak menabrak sidebar
   L.control.zoom({
@@ -845,7 +864,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // ================= 9.5 KOORDINAT PICKER (DEVELOPER HELPER) =================
   // Hanya aktif secara lokal (file://, localhost) atau jika URL mengandung '?dev=true' / '?admin=true'
-  const urlParams = new URLSearchParams(window.location.search);
   const isDevMode = urlParams.has("dev") || urlParams.has("admin") || 
                     window.location.hostname === "localhost" || 
                     window.location.hostname === "127.0.0.1" || 
