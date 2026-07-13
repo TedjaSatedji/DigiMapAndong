@@ -741,6 +741,162 @@ body.dark-mode .control-btn.active {
   color: var(--text-main);
 }
 
+/* ================= FLOATING LEGEND PANEL (BOTTOM LEFT) ================= */
+.floating-legend {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  width: 240px;
+  border-radius: 16px;
+  z-index: 1150; /* Above map features, below detail-drawer (1200) */
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  flex-direction: column;
+  pointer-events: auto;
+  transition: transform var(--transition-normal), opacity var(--transition-normal), max-height var(--transition-normal);
+  overflow: hidden;
+  max-height: 400px;
+  transform: translateY(50px);
+  opacity: 0;
+}
+
+body.map-active .floating-legend {
+  transform: translateY(0);
+  opacity: 1;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease-out;
+  transition-delay: 0.3s;
+}
+
+/* If detail drawer is open (desktop), shift legend right */
+.detail-drawer.active ~ .floating-legend {
+  transform: translateX(390px);
+}
+
+.legend-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--border-color);
+  cursor: pointer;
+  user-select: none;
+}
+
+.legend-title {
+  font-family: var(--font-heading);
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.legend-toggle-btn {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  transition: all var(--transition-fast);
+}
+
+.legend-toggle-btn:hover {
+  background: var(--accent-light);
+  color: var(--accent-color);
+}
+
+.legend-content {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  transition: opacity var(--transition-fast), padding var(--transition-fast);
+}
+
+.legend-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.legend-section-title {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.25rem;
+}
+
+.category-legend-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.category-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.category-legend-icon {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-size: 0.75rem;
+  flex-shrink: 0;
+}
+
+.category-legend-label {
+  font-size: 0.825rem;
+  font-weight: 500;
+  color: var(--text-main);
+}
+
+/* Collapsed State */
+.floating-legend.collapsed {
+  max-height: 43px; /* Only show header */
+}
+
+.floating-legend.collapsed .legend-content {
+  opacity: 0;
+  pointer-events: none;
+  padding: 0 1rem;
+}
+
+.floating-legend.collapsed .legend-toggle-btn i {
+  transform: rotate(-180deg);
+}
+
+/* Responsive behavior */
+@media (max-width: 768px) {
+  .floating-legend {
+    bottom: 20px;
+    left: 12px;
+    width: 200px;
+    z-index: 1050;
+  }
+  
+  .detail-drawer.peeking ~ .floating-legend,
+  .detail-drawer.expanded ~ .floating-legend {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(20px);
+  }
+}
+
 /* ================= SLIDING DETAIL DRAWER (DESKTOP) ================= */
 .detail-drawer {
   position: absolute;

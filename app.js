@@ -921,6 +921,28 @@ document.addEventListener("DOMContentLoaded", () => {
     closeAllControlPopups();
   });
 
+  // ================= 9.4 LOGIKA KOLLAPSE LEGENDA MELAYANG (BOTTOM LEFT) =================
+  const floatingLegend = document.getElementById("floatingLegend");
+  const legendHeader = document.getElementById("legendHeader");
+
+  if (floatingLegend && legendHeader) {
+    // Read saved collapse state from localStorage (default is collapsed/closed, i.e. true)
+    const savedState = localStorage.getItem("legendCollapsed");
+    const isCollapsed = savedState === null ? true : savedState === "true";
+    
+    if (isCollapsed) {
+      floatingLegend.classList.add("collapsed");
+    } else {
+      floatingLegend.classList.remove("collapsed");
+    }
+
+    legendHeader.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const collapsed = floatingLegend.classList.toggle("collapsed");
+      localStorage.setItem("legendCollapsed", collapsed);
+    });
+  }
+
   // ================= 10. HELPER UNTUK MENGISI DATA PROFIL =================
   function initProfileData() {
     document.getElementById("heroTitle").textContent = KELURAHAN_PROFILE.name;
