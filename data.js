@@ -153,6 +153,28 @@ const LOCATIONS = [
     "address": "Jl. Lkr. Utara, Rw. 6, Andongsili, Kec. Mojotengah, Kabupaten Wonosobo, Jawa Tengah 56351",
     "image": "assets/photos/kelurahan/ramasyito.webp",
     "contact": "-"
+  },
+  {
+    "id": 12,
+    "name": "United Hotspring (Pemandian Air Panas)",
+    "category": "Wisata",
+    "latitude": -7.32796,
+    "longitude": 109.912117,
+    "description": "Sebuah salah satu pemandian air panas yang berada di Kelurahan Andongsili",
+    "address": "Jl. Soeparjo Roestam, Rw. 6, Andongsili, Wonosobo, Kabupaten Wonosobo, Jawa Tengah 56311",
+    "image": "assets/photos/kelurahan/unitid.webp",
+    "contact": "087862645470"
+  },
+  {
+    "id": 13,
+    "name": "Masjid Birrul Walidain",
+    "category": "Tempat Ibadah",
+    "latitude": -7.326797,
+    "longitude": 109.914029,
+    "description": "Mushola lingkungan di Kelurahan Andongsili yang diperuntukkan bagi warga sekitar dalam melaksanakan ibadah shalat berjamaah lima waktu.",
+    "address": "Rw. 7, Andongsili, Kec. Mojotengah, Kabupaten Wonosobo, Jawa Tengah 56351",
+    "image": "assets/photos/kelurahan/birrulwalidain.webp",
+    "contact": "-"
   }
 ];
 
