@@ -1,0 +1,13 @@
+# www.robotstxt.org
+# Allow all search engines to index the site, except administrative tools and backups.
+
+User-agent: *
+Disallow: /manage.html
+Disallow: /manage.css
+Disallow: /manage.js
+Disallow: /manage-client.js
+Disallow: /data.backup.js
+
+Allow: /
+
+Sitemap: https://peta.andongsili.online/sitemap.xml
