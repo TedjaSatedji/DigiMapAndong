@@ -1804,3 +1804,109 @@ body.dark-mode .btn-route-wide {
     max-width: 180px !important; /* Extra compact on mobile to prevent wrapping */
   }
 }
+
+/* ================= HERO FOOTER SECTION ================= */
+.hero-footer {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  padding: 1.5rem 4rem;
+  background: rgba(15, 23, 42, 0.45);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+.footer-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.footer-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--accent-color);
+}
+
+.footer-value {
+  font-size: 0.85rem;
+  color: #f8fafc;
+  font-weight: 500;
+}
+
+.footer-value .student-id {
+  font-size: 0.75rem;
+  color: #94a3b8;
+  margin-left: 0.25rem;
+  font-family: var(--font-body);
+}
+
+.footer-link {
+  font-size: 0.85rem;
+  color: #f8fafc;
+  text-decoration: none;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  transition: color var(--transition-fast), transform var(--transition-fast);
+}
+
+.footer-link:hover {
+  color: var(--accent-color);
+  transform: translateY(-1px);
+}
+
+.footer-divider {
+  width: 1px;
+  height: 28px;
+  background-color: rgba(255, 255, 255, 0.12);
+}
+
+/* Responsiveness for Hero Footer */
+@media (max-width: 768px) {
+  .hero-footer {
+    padding: 1.25rem 2rem;
+  }
+  
+  .footer-divider {
+    display: none;
+  }
+  
+  .footer-container {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-footer {
+    padding: 1rem 1.25rem;
+  }
+  
+  .footer-container {
+    gap: 0.75rem;
+  }
+  
+  .footer-label {
+    font-size: 0.6rem;
+  }
+  
+  .footer-value, .footer-link {
+    font-size: 0.8rem;
+  }
+}
